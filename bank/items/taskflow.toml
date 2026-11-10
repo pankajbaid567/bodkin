@@ -7,10 +7,10 @@ date = "September 2026"
 end = "2026-09"
 repo = "../../../Resilient_TaskFlow"
 tech = ["Node.js", "Fastify", "TypeScript", "PostgreSQL", "Redis Streams", "k6", "Docker", "GitHub Actions"]
-links = {}
+links = { github = "https://github.com/pankajbaid567/Resilient_Taskflow", demo = "https://github.com/pankajbaid567/Resilient_Taskflow/blob/main/docs/report/taskflow-ieee.pdf" }
 archetypes = { backend = 0.9, distributed = 0.9, infra = 0.4 }
 skills = { nodejs = 1.0, typescript = 1.0, fastify = 1.0, postgres = 0.9, redis = 1.0, queue = 1.0, idempotency = 1.0, eventsourcing = 0.8, concurrency = 0.7, performance = 0.8, testing = 0.9, docker = 0.8, cicd = 0.8, rest = 0.8, authn = 0.5, distsys = 0.8, apidesign = 0.7 }
-note = "Numbers come from the current resume; GitHub and demo links are on the resume but not recorded here yet (add them to links). Not re-run by Bodkin's author."
+note = "Numbers and links come from the current resume (SDE_Backend.pdf), checked against the PDF on 2026-11-10; not re-run by Bodkin's author. The Demo link on the resume points to the IEEE-style report in the repo."
 
 [[claims]]
 id = "outbox-leases"
