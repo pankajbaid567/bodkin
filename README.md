@@ -8,6 +8,9 @@ You will own many projects. Every JD wants a different three. Bodkin takes a JD 
 
 Zero dependencies (Python 3.11+ standard library). No network, no telemetry: your JDs and your bank never leave the machine.
 
+## Hosting (optional)
+`PYTHONPATH=src python -m bodkin serve --public` binds `0.0.0.0`, reads `PORT`, answers only to the host names in `BODKIN_ALLOWED_HOSTS` (Render sets `RENDER_EXTERNAL_HOSTNAME` itself), limits bodies to 100 KB and runs at most 4 analyses at once. Pasted job descriptions are analysed in memory and never stored. The bank it serves is the one in `bank/`, so a public instance shows those resume bullets to anyone.
+
 ## Quickstart
 
 ```bash

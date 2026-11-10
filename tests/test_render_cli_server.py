@@ -2,6 +2,7 @@ import contextlib
 import http.client
 import io
 import json
+import os
 import socket
 import threading
 import unittest
@@ -133,3 +134,78 @@ class ServerTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PublicServerTests(unittest.TestCase):
+    """The hosting configuration: only named hosts, small bodies, bounded concurrency."""
+
+    @classmethod
+    def setUpClass(cls):
+        s = socket.socket()
+        s.bind(("127.0.0.1", 0))
+        cls.port = s.getsockname()[1]
+        s.close()
+        cls.gate = threading.Event()
+        os.environ["BODKIN_ALLOWED_HOSTS"] = "bodkin.example.test"
+        from bodkin.server import public_hosts, PUBLIC_MAX_BODY
+        cls.max_body = PUBLIC_MAX_BODY
+        cls.srv = ThreadingHTTPServer(("127.0.0.1", cls.port), make_handler(str(ROOT / "bank"), None, None, cls.port, public_hosts(cls.port), PUBLIC_MAX_BODY, 1))
+        threading.Thread(target=cls.srv.serve_forever, daemon=True).start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.srv.shutdown()
+        cls.srv.server_close()
+        os.environ.pop("BODKIN_ALLOWED_HOSTS", None)
+
+    def req(self, method, path, body=None, host="bodkin.example.test"):
+        c = http.client.HTTPConnection("127.0.0.1", self.port, timeout=10)
+        c.request(method, path, body=body, headers={"Host": host, "Content-Type": "application/json"})
+        r = c.getresponse()
+        return r.status, r.read()
+
+    def test_only_the_named_host_is_served(self):
+        self.assertEqual(self.req("GET", "/")[0], 200)
+        self.assertEqual(self.req("GET", "/", host="evil.example")[0], 403)
+        self.assertEqual(self.req("GET", "/", host="bodkin.example.test:1234")[0], 403)
+
+    def test_body_limit_is_small(self):
+        big = json.dumps({"jd": "x" * (self.max_body + 10)})
+        self.assertEqual(self.req("POST", "/api/analyze", big)[0], 413)
+        ok = json.dumps({"jd": "Python backend intern, Go, PostgreSQL"})
+        self.assertEqual(self.req("POST", "/api/analyze", ok)[0], 200)
+
+    def test_public_mode_refuses_to_start_without_host_names(self):
+        from bodkin.server import public_hosts
+        os.environ.pop("BODKIN_ALLOWED_HOSTS", None)
+        os.environ.pop("RENDER_EXTERNAL_HOSTNAME", None)
+        try:
+            with self.assertRaises(SystemExit):
+                public_hosts(80)
+        finally:
+            os.environ["BODKIN_ALLOWED_HOSTS"] = "bodkin.example.test"
+
+    def test_busy_server_says_503_instead_of_queueing(self):
+        from bodkin import server as srv_mod
+        started, release = threading.Event(), threading.Event()
+        real = srv_mod.analyze_request
+
+        def slow(*a, **k):
+            started.set()
+            release.wait(5)
+            return real(*a, **k)
+
+        srv_mod.analyze_request = slow
+        try:
+            payload = json.dumps({"jd": "Go backend intern"})
+            first = []
+            t = threading.Thread(target=lambda: first.append(self.req("POST", "/api/analyze", payload)[0]))
+            t.start()
+            self.assertTrue(started.wait(5))
+            self.assertEqual(self.req("POST", "/api/analyze", payload)[0], 503)     # the single slot is taken
+            release.set()
+            t.join(10)
+            self.assertEqual(first, [200])
+        finally:
+            srv_mod.analyze_request = real
+            release.set()

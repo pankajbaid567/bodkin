@@ -1,7 +1,9 @@
-"""Local web UI: a thin client over the same analysis code (ADR-009). Binds 127.0.0.1 only."""
+"""Web UI: a thin client over the same analysis code (ADR-009). Binds 127.0.0.1 by default; --public binds 0.0.0.0 for hosting."""
 from __future__ import annotations
 
 import json
+import os
+import threading
 from datetime import date
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -32,11 +34,27 @@ def analyze_request(bank_dir, tax_path, lint_path, payload: dict) -> dict:
     return out
 
 
-def make_handler(bank_dir, tax_path, lint_path, port: int):
-    allowed_hosts = {f"127.0.0.1:{port}", f"localhost:{port}"}
+PUBLIC_MAX_BODY = 100_000      # a 100 KB job description is far larger than any real one
+PUBLIC_MAX_CONCURRENT = 4      # analyses running at once; more get a 503 instead of queueing without bound
+
+
+def public_hosts(port: int) -> set[str]:
+    """Hostnames a public deployment answers to: BODKIN_ALLOWED_HOSTS (comma separated) plus Render's own hostname."""
+    names = {h.strip() for h in os.environ.get("BODKIN_ALLOWED_HOSTS", "").split(",") if h.strip()}
+    if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
+        names.add(os.environ["RENDER_EXTERNAL_HOSTNAME"])
+    if not names:
+        raise SystemExit("--public needs BODKIN_ALLOWED_HOSTS (or RENDER_EXTERNAL_HOSTNAME) so the Host check can refuse other names")
+    return names | {f"{n}:{port}" for n in names} | {f"127.0.0.1:{port}", f"localhost:{port}"}
+
+
+def make_handler(bank_dir, tax_path, lint_path, port: int, allowed_hosts=None, max_body: int = MAX_BODY, max_concurrent: int | None = None):
+    allowed_hosts = set(allowed_hosts) if allowed_hosts else {f"127.0.0.1:{port}", f"localhost:{port}"}
+    slots = threading.BoundedSemaphore(max_concurrent) if max_concurrent else None
 
     class H(BaseHTTPRequestHandler):
         server_version = "bodkin"
+        timeout = 15           # drop connections that stall mid-request
 
         def log_message(self, fmt, *a):  # quiet
             pass
@@ -74,20 +92,31 @@ def make_handler(bank_dir, tax_path, lint_path, port: int):
             if self.path != "/api/analyze":
                 return self._send(404, b'{"error":"not found"}')
             n = int(self.headers.get("Content-Length", "0") or 0)
-            if n <= 0 or n > MAX_BODY:
-                return self._send(413, b'{"error":"body must be 1 byte to 1 MB"}')
+            if n <= 0 or n > max_body:
+                return self._send(413, json.dumps({"error": f"body must be 1 byte to {max_body // 1000} KB"}).encode())
+            if slots is not None and not slots.acquire(blocking=False):
+                return self._send(503, b'{"error":"busy, try again in a moment"}')
             try:
                 payload = json.loads(self.rfile.read(n))
                 return self._send(200, json.dumps(analyze_request(bank_dir, tax_path, lint_path, payload), ensure_ascii=False).encode())
             except (ValueError, KeyError, BankError) as e:
                 return self._send(400, json.dumps({"error": str(e)}).encode())
+            finally:
+                if slots is not None:
+                    slots.release()
 
     return H
 
 
-def serve(bank_dir, tax_path, lint_path, port: int = 8787) -> None:
-    srv = ThreadingHTTPServer(("127.0.0.1", port), make_handler(bank_dir, tax_path, lint_path, port))
-    print(f"Bodkin UI on http://127.0.0.1:{port}  (Ctrl+C to stop; nothing leaves this machine)")
+def serve(bank_dir, tax_path, lint_path, port: int = 8787, public: bool = False) -> None:
+    if public:
+        port = int(os.environ.get("PORT", port))
+        handler = make_handler(bank_dir, tax_path, lint_path, port, public_hosts(port), PUBLIC_MAX_BODY, PUBLIC_MAX_CONCURRENT)
+        srv = ThreadingHTTPServer(("0.0.0.0", port), handler)
+        print(f"Bodkin public demo on 0.0.0.0:{port}; pasted job descriptions are analysed in memory and never stored")
+    else:
+        srv = ThreadingHTTPServer(("127.0.0.1", port), make_handler(bank_dir, tax_path, lint_path, port))
+        print(f"Bodkin UI on http://127.0.0.1:{port}  (Ctrl+C to stop; nothing leaves this machine)")
     try:
         srv.serve_forever()
     except KeyboardInterrupt:

@@ -171,7 +171,7 @@ def cmd_eval(args) -> int:
 
 def cmd_serve(args) -> int:
     from .server import serve
-    serve(args.bank, args.taxonomy, args.lint, args.port)
+    serve(args.bank, args.taxonomy, args.lint, args.port, public=args.public)
     return 0
 
 
@@ -229,8 +229,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--min-pass", type=float, default=0.8)
     sel_opts(p)
     p.set_defaults(fn=cmd_eval)
-    p = sub.add_parser("serve", help="local web UI on 127.0.0.1", parents=[shared])
+    p = sub.add_parser("serve", help="local web UI on 127.0.0.1 (or --public for hosting)", parents=[shared])
     p.add_argument("--port", type=int, default=8787)
+    p.add_argument("--public", action="store_true", help="bind 0.0.0.0, read PORT, allow only BODKIN_ALLOWED_HOSTS / RENDER_EXTERNAL_HOSTNAME, cap body size and concurrency")
     p.set_defaults(fn=cmd_serve)
     return ap
 
