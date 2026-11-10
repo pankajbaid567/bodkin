@@ -23,7 +23,10 @@ class TaxonomyTests(unittest.TestCase):
     def test_go_language_vs_english(self):
         self.assertIn("go", self.ids("We write services in Go and Rust."))
         self.assertIn("go", self.ids("Strong Go skills; golang preferred"))
-        for bad in ("a go-getter with a go to market mindset", "Plan to go live, go beyond expectations", "We go through a lot"):
+        # Capitalised variants matter: the Go skill is case-sensitive, so only "Go ..." phrases can be mistaken for the language
+        # (lowercase ones never matched, which let a mutant that disabled stop phrases survive).
+        for bad in ("a go-getter with a go to market mindset", "Plan to go live, go beyond expectations", "We go through a lot",
+                    "We want a Go-getter", "Go to market experience", "Go live in Q3 and Go beyond expectations", "Go through the onboarding"):
             self.assertNotIn("go", self.ids(bad), bad)
 
     def test_java_is_not_javascript(self):
