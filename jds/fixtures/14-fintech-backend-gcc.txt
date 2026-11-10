@@ -1,0 +1,19 @@
+---
+name: Backend engineer, fintech GCC
+source: synthetic composite of typical wording
+one_of: taskflow, pitbook
+one_of: vitram, pitbook
+must_not: cairn
+---
+Software Engineer I - Payments Platform (Bengaluru)
+
+Responsibilities
+- Build microservices for payment processing and settlement.
+- Ensure transactional integrity and reconciliation accuracy.
+
+Requirements
+- Java with Spring Boot, or Python/FastAPI; REST APIs.
+- SQL, PostgreSQL, ACID transactions and idempotent API design.
+- Message queues and event-driven architecture.
+- Unit and integration testing; CI/CD.
+- 0-2 years of experience.

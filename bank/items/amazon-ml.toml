@@ -1,0 +1,20 @@
+id = "amazon-ml"
+kind = "achievement"
+name = "Amazon ML Challenge 2026"
+title = "Amazon ML Challenge 2026"
+status = "shipped"
+date = ""
+end = ""
+tech = []
+links = {}
+archetypes = { ml = 0.8 }
+skills = { ml = 0.8, python = 0.5, dsa = 0.2 }
+note = "From the resume."
+
+[[claims]]
+id = "line"
+text = 'Team rank **8** on the public leaderboard among ~**80,000** registered participants, Amazon ML Challenge 2026.'
+numbers = ["8", "80,000", "2026"]
+[claims.proof]
+status = "reported"
+note = "From the resume."

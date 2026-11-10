@@ -1,0 +1,50 @@
+id = "incalculate"
+kind = "experience"
+name = "in.culcate"
+title = "Founding Software Engineer (AI & Backend)"
+subtitle = "in.culcate"
+status = "shipped"
+date = "September 2024 - March 2026"
+end = "2026-03"
+tech = ["Node.js", "Express.js", "MongoDB", "AWS EC2", "ElevenLabs"]
+links = {}
+archetypes = { backend = 0.8, genai = 0.6, fullstack = 0.3 }
+skills = { nodejs = 1.0, express = 1.0, mongodb = 1.0, rest = 0.9, aws = 0.6, genai = 0.7, agents = 0.7, llm = 0.6, apidesign = 0.7 }
+note = "From the resume."
+
+[[claims]]
+id = "rest"
+text = 'Built **20+** REST endpoints in Node.js, Express.js, MongoDB for auth and content in a **2,000**-user app.'
+numbers = ["20", "2,000"]
+skills = { nodejs = 1.0, express = 1.0, mongodb = 1.0, rest = 1.0, authn = 0.5, apidesign = 0.8 }
+[claims.proof]
+status = "reported"
+note = "From the resume."
+
+[[claims]]
+id = "agents"
+text = 'Engineered a **5+** agent pipeline (scripting, voice, ElevenLabs narration), cutting production time **40%**.'
+numbers = ["5", "40"]
+skills = { agents = 1.0, genai = 0.9, llm = 0.7 }
+[claims.proof]
+status = "reported"
+note = "From the resume."
+
+[[claims]]
+id = "cms"
+text = 'Automated **5+** publishing workflows with a centralized CMS, reducing content turnaround time by **30%**.'
+numbers = ["5", "30"]
+skills = { apidesign = 0.4 }
+archetypes = { backend = 0.5 }
+[claims.proof]
+status = "reported"
+note = "From the resume."
+
+[[claims]]
+id = "deploy"
+text = "Streamlined the team's deployment workflow, running backend services on **AWS EC2**."
+numbers = []
+skills = { aws = 1.0, cicd = 0.4 }
+[claims.proof]
+status = "reported"
+note = "From the resume."

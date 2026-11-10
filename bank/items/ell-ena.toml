@@ -1,0 +1,20 @@
+id = "ell-ena"
+kind = "achievement"
+name = "AOSSIE Ell-ena PostgreSQL RLS fixes"
+title = "AOSSIE Ell-ena PostgreSQL RLS fixes"
+status = "shipped"
+date = ""
+end = ""
+tech = []
+links = {}
+archetypes = { backend = 0.6, security = 0.5 }
+skills = { postgres = 1.0, rls = 1.0, codereview = 0.9, dbdesign = 0.6 }
+note = "From the resume."
+
+[[claims]]
+id = "line"
+text = 'Merged **2** PostgreSQL RLS fixes in AOSSIE Ell-ena (PRs #76, #78): EXISTS policies, missing DELETE rules.'
+numbers = ["2", "76", "78"]
+[claims.proof]
+status = "reported"
+note = "From the resume."

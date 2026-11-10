@@ -1,0 +1,140 @@
+id = "pitbook"
+kind = "project"
+name = "Pitbook"
+title = "Pitbook – Crash-safe matching engine and live order book"
+status = "shipped"
+date = "November 2026"
+end = "2026-11"
+repo = "../../Pitbook"
+tech = ["Go", "React", "TypeScript", "WebSocket", "Cloudflare Workers", "R2", "Render"]
+links = { github = "https://github.com/pankajbaid567/pitbook", demo = "https://pitbook.baidpankaj567.workers.dev" }
+archetypes = { systems = 1.0, lowlatency = 0.8, backend = 0.8, distributed = 0.5, fintech = 0.5, fullstack = 0.4, devtools = 0.2 }
+skills = { go = 1.0, concurrency = 1.0, wal = 1.0, idempotency = 0.9, eventsourcing = 0.9, performance = 0.9, lowlatency = 0.7, trading = 0.9, websocket = 0.8, testing = 0.8, proptest = 1.0, networking = 0.4, react = 0.5, typescript = 0.5, cloudflare = 0.7, docker = 0.6, cicd = 0.6, rest = 0.7, apidesign = 0.7, observability = 0.5, sysdesign = 0.7, dsa = 0.5, distsys = 0.3, memory = 0.3 }
+note = "Every number here is generated from bench/results; see Pitbook/docs/resume-claims.md. Process-crash safety only (SIGKILL), single node."
+
+[[claims]]
+id = "reference-model"
+group = "correctness"
+text = 'Built a deterministic price-time matching engine in Go, verified against a reference model over **1,000,000** random commands.'
+numbers = ["1,000,000"]
+skills = { go = 1.0, trading = 0.9, testing = 0.8, proptest = 0.9, dsa = 0.4 }
+[claims.variants]
+fintech = 'Built a Go matching engine with IOC, FOK and self-trade prevention, proven equal to a reference model over **1,000,000** commands.'
+lowlatency = 'Built a deterministic Go matching engine (no clock or I/O in the core) proven equal to a naive reference over **1,000,000** commands.'
+backend = 'Designed a Go engine whose state is a pure function of its log; matched a reference model over **1,000,000** random commands.'
+[claims.proof]
+status = "proven"
+command = "make prop"
+artifact = "bench/results/property-*.txt"
+date = "2026-11-10"
+limits = "Simulator: one venue, no real money."
+
+[[claims]]
+id = "mutation-check"
+group = "testing"
+text = 'Proved the tests have teeth: **5 of 5** deliberately injected engine bugs are caught by the property test.'
+numbers = ["5"]
+skills = { testing = 1.0, proptest = 0.9 }
+[claims.proof]
+status = "proven"
+command = "make mutants"
+artifact = "bench/results/mutation-*.txt"
+date = "2026-11-10"
+
+[[claims]]
+id = "crash-safety"
+group = "durability"
+text = 'Event-sourced with a CRC-framed WAL and group-commit fsync: **0** acked commands lost or duplicated in **1,000** SIGKILL runs.'
+numbers = ["0", "1,000", "117,609"]
+skills = { wal = 1.0, idempotency = 0.8, eventsourcing = 1.0, distsys = 0.5, proptest = 0.6 }
+[claims.variants]
+backend = 'Made order entry crash-safe: **0** acknowledged commands lost or duplicated across **1,000** SIGKILL runs (**117,609** acks checked).'
+distributed = 'WAL, group commit and snapshots; **1,000** SIGKILL runs found **0** acknowledged commands lost or duplicated (**117,609** checked).'
+fintech = 'Guaranteed no acknowledged order is lost or double-booked: **0** failures in **1,000** SIGKILL runs, with idempotent client retries.'
+[claims.proof]
+status = "proven"
+command = "make crash-test"
+artifact = "bench/results/crashtest-*.json"
+date = "2026-11-10"
+limits = "Process crash (SIGKILL) only; the OS page cache survives, so power loss is not tested."
+
+[[claims]]
+id = "harness-found-bug"
+group = "testing"
+text = 'Built a crash harness that found and fixed a real retry bug (replayed REPLACE logged twice in ~**4%** of runs); added a test.'
+numbers = ["4"]
+skills = { testing = 1.0, proptest = 0.8, idempotency = 0.9 }
+[claims.proof]
+status = "proven"
+command = "go test ./internal/engine -run TestReplaceThatLosesPriorityIsIdempotent"
+artifact = "docs/DESIGN.md"
+date = "2026-11-10"
+note = "ADR-015 records the bug and the fix."
+
+[[claims]]
+id = "performance"
+group = "performance"
+text = 'Open-loop benchmarks (Apple M3): **137 ns**/command core, **~670k**/s engine-only, **~80k**/s with fsync before every ack.'
+numbers = ["137", "670", "80"]
+skills = { performance = 1.0, lowlatency = 0.8, go = 0.5 }
+[claims.variants]
+lowlatency = 'Core matching costs **137 ns**/command (single goroutine, no log); whole engine **~670k**/s, **~80k**/s with fsync before every ack.'
+[claims.proof]
+status = "proven"
+command = "make bench"
+artifact = "bench/results/loadgen-*.csv"
+date = "2026-11-10"
+limits = "One busy laptop; tail latencies at 100k/s and above are dominated by scheduler noise (see BENCHMARKS.md control)."
+
+[[claims]]
+id = "recovery"
+group = "recovery"
+text = 'Rebuilds a **1M**-command log in **0.32 s** (snapshot plus log replay), so a crashed engine is back almost instantly.'
+numbers = ["1", "0.32"]
+skills = { wal = 0.8, performance = 0.6 }
+[claims.proof]
+status = "proven"
+command = "make bench"
+artifact = "bench/results/loadgen-*-recovery.csv"
+date = "2026-11-10"
+
+[[claims]]
+id = "live-ui"
+group = "product"
+text = 'Shipped a live order-book UI and WebSocket gateway with gap detection and slow-consumer resync on Cloudflare Workers + Render.'
+numbers = []
+skills = { websocket = 1.0, react = 0.8, typescript = 0.7, cloudflare = 0.9, apidesign = 0.5 }
+[claims.variants]
+fullstack = 'Built a React + TypeScript trading UI (depth chart, tape, orders) on a gap-detecting WebSocket feed, hosted on Cloudflare Workers.'
+[claims.proof]
+status = "proven"
+command = "open https://pitbook.baidpankaj567.workers.dev"
+artifact = "docs/deploy.md"
+date = "2026-11-10"
+
+[[claims]]
+id = "archive-restore"
+group = "infra"
+text = 'Mirrored the log to R2 via a token-protected Worker so a stateless Render host restores its book on restart.'
+numbers = []
+skills = { cloudflare = 1.0, wal = 0.6, docker = 0.4, serverless = 0.6 }
+[claims.variants]
+infra = 'Made a stateless free-tier host durable: log mirrored to R2 via a token-protected Worker, restored on boot (wiped-disk tested).'
+[claims.proof]
+status = "proven"
+command = "go test ./internal/archive"
+artifact = "docs/deploy.md"
+date = "2026-11-10"
+limits = "Mirror is eventually durable; crash-safety claims are about the local WAL."
+
+[[claims]]
+id = "ci"
+group = "testing"
+text = 'Gated changes with GitHub Actions: race-detector tests, a **25**-run SIGKILL smoke test and an injected-bug check.'
+numbers = ["25"]
+skills = { cicd = 1.0, testing = 0.8 }
+[claims.proof]
+status = "proven"
+command = "see the Actions tab of the repo"
+artifact = ".github/workflows/ci.yml"
+date = "2026-11-10"

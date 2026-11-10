@@ -1,0 +1,18 @@
+---
+name: Data platform intern
+source: synthetic composite of typical wording
+one_of: taskflow, cache-cluster, pitbook
+must_not: cairn
+gap: spark
+---
+Data Platform Engineer Intern
+
+Responsibilities
+- Build batch and streaming data pipelines on a petabyte-scale platform.
+- Improve reliability and performance of distributed data processing.
+
+Requirements
+- Strong SQL and one of Python, Scala or Java.
+- Familiarity with Apache Spark, Kafka, Airflow or similar tools.
+- Understanding of distributed systems and data modeling.
+- Experience with ETL and data warehouses.

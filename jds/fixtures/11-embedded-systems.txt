@@ -1,0 +1,18 @@
+---
+name: Embedded / systems software intern
+source: synthetic composite of typical wording
+one_of: cache-cluster, pitbook
+must_not: cairn, vitram
+gap: embedded
+---
+Embedded Software Intern
+
+Responsibilities
+- Develop firmware and device drivers in C for ARM-based SoCs.
+- Debug at the hardware boundary using oscilloscopes and logic analyzers.
+
+Requirements
+- Strong C and C++; memory management and pointers.
+- Operating systems concepts, RTOS and the Linux kernel.
+- Computer architecture; UART, SPI, I2C.
+- Hands-on with microcontrollers and bare metal programming.

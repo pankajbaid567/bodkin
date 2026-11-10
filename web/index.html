@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bodkin</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--line:#262d38;--text:#dbe3ee;--muted:#8895a7;--accent:#5aa9ff;--ok:#2fd39a;--bad:#ff5f78;--warn:#f5b942;color-scheme:dark}
+@media (prefers-color-scheme:light){:root{--bg:#f4f6fa;--panel:#fff;--line:#dbe3ee;--text:#17212e;--muted:#5d6d82;--accent:#1766d1;--ok:#0c9b6a;--bad:#d8334f;--warn:#a66a00;color-scheme:light}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.app{max-width:1180px;margin:0 auto;padding:16px}h1{margin:0 0 2px;font-size:22px}.sub{color:var(--muted);margin:0 0 14px}
+.grid{display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:14px;align-items:start}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
+.panel h2{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+textarea{width:100%;min-height:340px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;font:13px/1.45 ui-monospace,Menlo,monospace;resize:vertical}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}label{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center}
+input[type=number],select{background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:5px 7px;font:inherit;width:70px}select{width:auto}
+button{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer}button.ghost{background:transparent;color:var(--accent);border:1px solid var(--line);padding:4px 10px;font-weight:500;font-size:12px}
+button:focus-visible,textarea:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bar{display:grid;grid-template-columns:100px 1fr 40px;gap:8px;align-items:center;font-size:12px;margin:2px 0}.bar i{display:block;height:8px;border-radius:4px;background:var(--accent)}
+.chip{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 9px;font-size:12px;margin:2px 4px 2px 0}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}.muted{color:var(--muted)}
+.proj{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}.proj:first-of-type{border:0;margin-top:0;padding-top:0}
+.proj h3{margin:0;font-size:15px}.bul{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start;margin:6px 0;padding:6px 8px;background:var(--bg);border-radius:8px}
+.tag{font-size:11px;border-radius:4px;padding:1px 6px;margin-left:6px;border:1px solid var(--line)}.tag.proven{color:var(--ok)}.tag.reported{color:var(--warn)}
+ul{margin:4px 0;padding-left:18px}li{margin:2px 0}.tools{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.err{color:var(--bad)}
+</style>
+</head>
+<body>
+<div class="app">
+  <h1>Bodkin</h1>
+  <p class="sub">Paste a job description. Bodkin picks your best proven projects and bullets for it. It selects and orders; it never writes. Runs on this machine only.</p>
+  <div class="grid">
+    <section class="panel">
+      <h2>Job description</h2>
+      <textarea id="jd" placeholder="Paste the full JD here..." aria-label="Job description text"></textarea>
+      <div class="row">
+        <label>projects <input id="top" type="number" min="1" max="6" value="3"></label>
+        <label>bullets <input id="bullets" type="number" min="1" max="8" value="4"></label>
+        <label>variant <select id="variant"><option>auto</option></select></label>
+      </div>
+      <div class="row">
+        <label><input id="wip" type="checkbox" checked> include WIP</label>
+        <label><input id="pending" type="checkbox"> include pending claims</label>
+      </div>
+      <button id="go">Analyze</button> <span id="status" class="muted"></span>
+    </section>
+    <section id="out" class="panel" aria-live="polite"><h2>Result</h2><p class="muted">Nothing yet.</p></section>
+  </div>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+function h(tag, attrs, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) { if (k === "class") e.className = v; else if (k.startsWith("on")) e.addEventListener(k.slice(2), v); else e.setAttribute(k, v); }
+  for (const k of kids.flat()) if (k != null) e.append(k.nodeType ? k : document.createTextNode(String(k)));
+  return e;
+}
+const ARCH = ["auto","backend","distributed","fintech","genai","ml","data","infra","systems","lowlatency","security","fullstack","mobile","devtools"];
+ARCH.slice(1).forEach(a => $("variant").append(h("option", {}, a)));
+async function copy(text, btn) { try { await navigator.clipboard.writeText(text); const o = btn.textContent; btn.textContent = "copied"; setTimeout(() => btn.textContent = o, 1200); } catch { btn.textContent = "copy failed"; } }
+function bullet(b) {
+  const btn = h("button", { class: "ghost", onclick: (e) => copy(b.text.replaceAll("**", ""), e.target) }, "copy");
+  return h("div", { class: "bul" }, h("div", {}, b.text.replaceAll("**", ""), h("span", { class: "tag " + b.proof }, b.proof + (b.variant === "default" ? "" : " · " + b.variant))), btn);
+}
+function section(title, ...kids) { return h("div", { style: "margin-top:14px" }, h("h2", {}, title), ...kids); }
+function render(d) {
+  const out = $("out"); out.replaceChildren(h("h2", {}, "Result: " + d.title));
+  out.append(h("div", { class: "tools" },
+    h("button", { class: "ghost", onclick: (e) => copy(d.text, e.target) }, "copy resume text"),
+    h("button", { class: "ghost", onclick: (e) => copy(d.tex, e.target) }, "copy LaTeX"),
+    h("button", { class: "ghost", onclick: (e) => copy(d.markdown, e.target) }, "copy full report")));
+  const bars = Object.entries(d.archetypes).slice(0, 5).map(([a, v]) => h("div", { class: "bar" }, a, h("span", {}, h("i", { style: `width:${Math.round(v * 100)}%` })), v.toFixed(2)));
+  out.append(section("What the JD is about", ...bars, h("div", {}, d.skills.slice(0, 10).map(s => h("span", { class: "chip", title: (s.evidence[0] || {}).text || "" }, s.name + " " + s.weight.toFixed(2))))));
+  if (d.eligibility.length) out.append(section("Eligibility (advice)", d.eligibility.map(e => h("div", { class: e.status === "ok" ? "ok" : e.status === "fail" ? "bad" : "muted" }, (e.status === "ok" ? "OK  " : e.status === "fail" ? "NO  " : "?   ") + e.label + ": " + e.detail))));
+  const projs = d.projects.length ? d.projects.map(p => h("div", { class: "proj" },
+    h("h3", {}, p.title, p.status === "wip" ? h("span", { class: "tag warn" }, "WIP") : null, p.filler ? h("span", { class: "tag" }, "supporting, not JD-specific") : null),
+    h("div", { class: "muted" }, p.filler ? "your strongest proven work" : "covers " + Math.round(p.share * 100) + "% of the JD need · why: " + p.why.slice(0, 4).map(w => w.skill).join(", ")),
+    p.bullets.map(bullet))) : [h("p", { class: "muted" }, "No project is relevant enough for this JD.")];
+  out.append(section("Recommended projects", ...projs));
+  if (d.experience.length) out.append(section("Experience", d.experience.map(p => h("div", { class: "proj" }, h("h3", {}, p.title + (p.subtitle ? ", " + p.subtitle : "")), p.bullets.map(bullet)))));
+  if (d.achievements.length) out.append(section("Achievements", d.achievements.flatMap(p => p.bullets.map(bullet))));
+  out.append(section("Skills line (reordered)", Object.entries(d.skills_section).map(([c, ls]) => h("div", {}, h("b", {}, c + ": "), ls.map((l, i) => h("span", { class: l.matched ? "ok" : "" }, (i ? ", " : "") + l.name))))));
+  const g = d.gaps, gl = [];
+  gl.push(h("div", {}, "JD skill coverage: ", h("b", {}, Math.round(d.coverage * 100) + "%"), d.uncovered.length ? " · not covered: " + d.uncovered.slice(0, 8).join(", ") : ""));
+  if (g.claimable.length) gl.push(h("div", { class: "warn" }, "Add to your skills line if true: ", g.claimable.slice(0, 8).map(c => c.skill + " (" + c.evidence.join("/") + ")").join(", ")));
+  if (g.no_evidence.length) gl.push(h("div", {}, h("b", {}, "No proven evidence: "), g.no_evidence.slice(0, 8).map(c => c.skill + (c.roadmap.length ? " → " + c.roadmap[0].name.split(":")[0] : "")).join(", ")));
+  out.append(section("Gaps", ...gl));
+  if (d.warnings.length || d.limits.length) out.append(section("Read before you use this", h("ul", {}, d.warnings.map(w => h("li", { class: "warn" }, w)), d.limits.map(l => h("li", {}, "limit (" + l.claim + "): " + l.limit)))));
+}
+$("go").addEventListener("click", async () => {
+  const st = $("status"); st.textContent = "working..."; st.className = "muted";
+  try {
+    const r = await fetch("/api/analyze", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+      jd: $("jd").value, top: +$("top").value, bullets: +$("bullets").value, variant: $("variant").value, include_wip: $("wip").checked, include_pending: $("pending").checked }) });
+    const d = await r.json(); if (!r.ok) throw new Error(d.error || r.statusText);
+    render(d); st.textContent = "";
+  } catch (e) { st.textContent = String(e.message || e); st.className = "err"; }
+});
+</script>
+</body>
+</html>

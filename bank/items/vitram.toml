@@ -1,0 +1,57 @@
+id = "vitram"
+kind = "project"
+name = "VITRAM"
+title = "VITRAM – Financial companion for salaried users in India"
+status = "shipped"
+date = "October 2026"
+end = "2026-10"
+repo = "../../../paytm-mumbai"
+tech = ["FastAPI", "PostgreSQL", "React", "Cloudflare Workers", "Render", "Neon", "k6"]
+links = { github = "https://github.com/pankajbaid567/vitram", demo = "https://vitram.baidpankaj567.workers.dev" }
+archetypes = { backend = 0.9, fintech = 0.8, fullstack = 0.7, data = 0.2 }
+skills = { python = 1.0, fastapi = 1.0, postgres = 1.0, react = 0.8, rest = 0.9, apidesign = 0.8, dbdesign = 0.8, queryopt = 0.9, performance = 0.8, caching = 0.7, testing = 0.9, proptest = 0.6, docker = 0.4, cloudflare = 0.6, banking = 0.8 }
+note = "Numbers come from the current resume (SDE_Backend.pdf); not re-run by Bodkin's author. Re-verify with the VITRAM repo before an interview."
+
+[[claims]]
+id = "perf"
+group = "performance"
+text = 'Optimised via profiling, caching and indexing: dashboard throughput **3.5x**, hot query **4.7 ms** to **0.25 ms**.'
+numbers = ["3.5", "4.7", "0.25"]
+skills = { performance = 1.0, queryopt = 1.0, caching = 0.9, postgres = 0.8 }
+[claims.proof]
+status = "reported"
+note = "From the resume."
+
+[[claims]]
+id = "api"
+group = "design"
+text = 'Architected a **129**-operation FastAPI REST API over **38** PostgreSQL tables, consumed by a React UI.'
+numbers = ["129", "38"]
+skills = { fastapi = 1.0, rest = 1.0, postgres = 0.9, dbdesign = 0.9, react = 0.6, apidesign = 1.0 }
+[claims.variants]
+fullstack = 'Built a React UI on a **129**-operation FastAPI REST API over **38** PostgreSQL tables for salaried users in India.'
+fintech = 'Architected a **129**-operation FastAPI REST API over **38** PostgreSQL tables for a personal-finance product, consumed by a React UI.'
+[claims.proof]
+status = "reported"
+note = "From the resume."
+
+[[claims]]
+id = "deploy"
+group = "infra"
+text = 'Deployed on free-tier Cloudflare Workers, Render, Neon; k6: **213** req/s/process, p95 **151** ms (synthetic).'
+numbers = ["213", "151"]
+skills = { cloudflare = 0.9, performance = 0.7, docker = 0.3, postgres = 0.4 }
+[claims.proof]
+status = "reported"
+note = "From the resume; synthetic k6 load."
+limits = "Synthetic load on a free tier."
+
+[[claims]]
+id = "tests"
+group = "testing"
+text = 'Hardened with **656** tests (**88%** coverage) incl. Hypothesis property tests; EMI mutation score **89.3%**.'
+numbers = ["656", "88", "89.3"]
+skills = { testing = 1.0, proptest = 0.9, python = 0.5 }
+[claims.proof]
+status = "reported"
+note = "From the resume."

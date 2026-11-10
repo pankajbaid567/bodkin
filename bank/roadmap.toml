@@ -1,0 +1,72 @@
+# Planned portfolio projects. Used only to answer "which planned project would close this gap?".
+# Move a project to items/ (with proven claims) when it is built.
+
+[[planned]]
+id = "counterfoil"
+name = "Counterfoil: double-entry ledger and payment orchestration"
+summary = "Idempotent payments, signed webhooks, reconciliation, crash harness proving the ledger balances."
+skills = { payments = 1.0, ledger = 1.0, idempotency = 1.0, transactions = 0.9, postgres = 0.8, eventsourcing = 0.8, testing = 0.7, banking = 0.6, fraud = 0.2 }
+archetypes = { fintech = 1.0, backend = 0.8, distributed = 0.4 }
+
+[[planned]]
+id = "drumlin"
+name = "Drumlin: LSM-tree key-value store with Raft replication"
+summary = "Storage engine, compaction, crash recovery, then consensus and a linearizability fault harness."
+skills = { lsm = 1.0, wal = 0.9, consensus = 1.0, replication = 1.0, distsys = 0.9, concurrency = 0.8, proptest = 0.8, go = 0.8, rust = 0.5, nosql = 0.6, cassandra = 0.2 }
+archetypes = { distributed = 1.0, systems = 0.7, backend = 0.5 }
+
+[[planned]]
+id = "warrantgate"
+name = "Warrantgate: MCP / agent tool-call gateway with a measured attack suite"
+summary = "Policy, approvals, hash-chained audit log, and precision/recall on labelled malicious and benign traces."
+skills = { agents = 1.0, mcp = 1.0, evals = 1.0, genai = 0.7, llm = 0.6, authn = 0.7, websec = 0.6, prompteng = 0.3, testing = 0.5 }
+archetypes = { genai = 1.0, security = 0.7, devtools = 0.5, backend = 0.4 }
+
+[[planned]]
+id = "changelog"
+name = "Changelog: CDC pipeline with incremental materialized views"
+summary = "Postgres change data capture, exactly-once apply, incremental views, replay and lineage."
+skills = { etl = 1.0, kafka = 0.7, postgres = 0.8, spark = 0.2, analytics = 0.4, idempotency = 0.7, queue = 0.6, bigquery = 0.3, flink = 0.4 }
+archetypes = { data = 1.0, distributed = 0.5, backend = 0.4 }
+
+[[planned]]
+id = "beacon"
+name = "Beacon: OpenTelemetry-native observability backend"
+summary = "Ingest traces and metrics, store and query them, SLO alerting."
+skills = { opentelemetry = 1.0, observability = 1.0, prometheus = 0.7, reliability = 0.7, go = 0.6, performance = 0.6, kubernetes = 0.3 }
+archetypes = { infra = 1.0, distributed = 0.5 }
+
+[[planned]]
+id = "edge-gateway"
+name = "Edge gateway on Cloudflare Workers"
+summary = "Auth, rate limiting, signed webhooks and WAF rules on the edge, free tier."
+skills = { cloudflare = 1.0, authn = 0.8, ratelimit = 1.0, crypto = 0.7, websec = 0.6, serverless = 0.7, typescript = 0.7 }
+archetypes = { security = 0.8, backend = 0.6, infra = 0.5 }
+
+[[planned]]
+id = "minidb"
+name = "MiniDB: SQL engine with B+tree, buffer pool and MVCC"
+summary = "Parser, planner, storage, transactions, tested against SQLite."
+skills = { btree = 1.0, transactions = 1.0, dbdesign = 0.8, queryopt = 0.9, sql = 0.8, rust = 0.5, cpp = 0.5, concurrency = 0.6, memory = 0.5 }
+archetypes = { systems = 0.8, data = 0.7, distributed = 0.3 }
+
+[[planned]]
+id = "minivllm"
+name = "mini-vLLM: paged KV cache and continuous batching simulator"
+summary = "LLM inference serving mechanics with reproducible benchmarks."
+skills = { inference = 1.0, llm = 0.7, performance = 0.8, python = 0.6, memory = 0.6, pytorch = 0.4, mlops = 0.4 }
+archetypes = { ml = 0.7, genai = 0.7, systems = 0.5 }
+
+[[planned]]
+id = "concurrency-lab"
+name = "Concurrency lab: pools, lock-free queue, rate limiter with race tests"
+summary = "Small, benchmarked implementations in Go, Java and C++ for thread-safe interview rounds."
+skills = { concurrency = 1.0, lockfree = 0.8, ratelimit = 0.7, performance = 0.6, java = 0.5, cpp = 0.5, go = 0.5, dsa = 0.5, testing = 0.5 }
+archetypes = { systems = 0.6, lowlatency = 0.6, backend = 0.5 }
+
+[[planned]]
+id = "userspace-tcp"
+name = "User-space TCP stack or eBPF tracer (C or Rust)"
+summary = "Networking and OS fundamentals for embedded, networking and kernel-adjacent JDs."
+skills = { networking = 1.0, c = 0.9, os = 0.8, linux = 0.8, memory = 0.6, rust = 0.4, embedded = 0.3 }
+archetypes = { systems = 1.0 }

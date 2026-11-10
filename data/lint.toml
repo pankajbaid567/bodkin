@@ -1,0 +1,10 @@
+# Wording rules for bank texts. Mirrors the "what not to claim" rules of the Pitbook claims register.
+# A claim can opt out of one phrase with allow = ["phrase"] (and should say why in its note).
+[lint]
+max_len = 130
+banned = [
+  "fault-tolerant", "fault tolerant", "highly available", "high availability", "production-grade", "production grade",
+  "exchange-grade", "enterprise-grade", "zero downtime", "zero-downtime", "world-class", "state-of-the-art", "cutting-edge",
+  "blazing", "revolutionary", "best-in-class", "seamless", "robust and scalable", "industry-leading", "bulletproof", "military-grade",
+]
+weak_openers = ["responsible for", "worked on", "helped", "assisted", "participated in", "involved in", "tasked with", "was part of", "i ", "my "]

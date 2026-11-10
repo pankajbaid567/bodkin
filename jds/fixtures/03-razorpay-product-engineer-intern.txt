@@ -1,0 +1,21 @@
+---
+name: Razorpay product engineer intern
+source: paraphrased from the stack recorded in the hiring report
+must: taskflow
+one_of: vitram, pitbook
+must_not: cairn
+---
+Product Engineer Intern (Payments)
+
+About the role
+You will build and operate payment APIs that handle millions of transactions.
+
+Requirements
+- Good command of Node.js, Go or PHP, and React for the frontend.
+- Working knowledge of SQL and NoSQL databases.
+- Strong data structures and algorithms; you will take a coding test.
+- Understanding of REST API design, idempotency and handling failures in payment flows.
+- System design basics.
+
+Preferred
+- Experience with queues, retries and webhooks.

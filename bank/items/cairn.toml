@@ -1,0 +1,88 @@
+id = "cairn"
+kind = "project"
+name = "Cairn"
+title = "Cairn – Permission-aware evidence search and decision memory"
+status = "wip"
+date = "November 2026"
+end = "2026-11"
+repo = "../../../company_brain"
+tech = ["Python", "FastAPI", "PostgreSQL", "pgvector", "MCP", "Cloudflare Workers AI", "DBOS"]
+links = {}
+archetypes = { genai = 1.0, backend = 0.7, security = 0.6, data = 0.4, devtools = 0.4 }
+skills = { rag = 1.0, llm = 0.8, mcp = 1.0, agents = 0.7, evals = 0.8, vectordb = 0.9, postgres = 0.9, fastapi = 0.8, rls = 1.0, authn = 0.6, python = 1.0, cloudflare = 0.5, queryopt = 0.4, testing = 0.8, genai = 0.9, dbdesign = 0.6 }
+note = "WIP: built and tested locally but not deployed or published, and only a fake-model evaluation has been run (real-model quality unmeasured). Name has collisions; rename decision is open. Numbers are from the project README, not re-run by Bodkin's author."
+
+[[claims]]
+id = "search"
+group = "product"
+text = 'Built permission-aware evidence search: answers cite only documents the asker may read, else say "not found".'
+numbers = []
+skills = { rag = 1.0, llm = 0.7, rls = 0.8, genai = 0.8 }
+[claims.proof]
+status = "reported"
+command = "make test-integration"
+artifact = "README.md"
+note = "From the Cairn README."
+
+[[claims]]
+id = "rls-canary"
+group = "security"
+text = 'Postgres row-level security plus per-query checks; **50** canary tests find **0** leaks across **5** MCP tools and **2** agents.'
+numbers = ["50", "0", "5", "2"]
+skills = { rls = 1.0, postgres = 0.9, authn = 0.8, mcp = 0.7, testing = 0.8 }
+[claims.proof]
+status = "reported"
+command = "make test-integration"
+artifact = "README.md"
+note = "From the Cairn README."
+limits = "Synthetic data; not an externally audited security product."
+
+[[claims]]
+id = "bitemporal"
+group = "design"
+text = 'Modelled decisions bitemporally: answers "what held on a date, as known on a date" from events the asker may read.'
+numbers = []
+skills = { dbdesign = 1.0, postgres = 0.8, rag = 0.3 }
+[claims.proof]
+status = "reported"
+command = "make test-integration"
+artifact = "README.md"
+note = "From the Cairn README."
+
+[[claims]]
+id = "verified-answers"
+group = "genai"
+text = 'Verified generated answers: unsupported claims are dropped; if nothing survives, the reply is a fixed not-found message.'
+numbers = []
+skills = { evals = 0.9, llm = 0.8, rag = 0.9, genai = 0.8 }
+[claims.proof]
+status = "reported"
+command = "make test-unit"
+artifact = "README.md"
+note = "From the Cairn README."
+limits = "The verifier is lexical: it can pass a claim that rearranges true words into a false meaning."
+
+[[claims]]
+id = "mcp-sync"
+group = "integration"
+text = 'Shipped an MCP stdio server with per-agent tokens and ACL-first GitHub sync; revocations answer **503** until applied.'
+numbers = ["503"]
+skills = { mcp = 1.0, agents = 0.8, authn = 0.8, queue = 0.4 }
+[claims.proof]
+status = "reported"
+command = "make test-integration"
+artifact = "README.md"
+note = "From the Cairn README."
+
+[[claims]]
+id = "eval-harness"
+group = "evaluation"
+text = 'Built an evaluation harness with bootstrap confidence intervals and deterministic suites over a synthetic corpus.'
+numbers = []
+skills = { evals = 1.0, analytics = 0.5, testing = 0.5 }
+[claims.proof]
+status = "reported"
+command = "make eval-tables"
+artifact = "docs/results.md"
+note = "From the Cairn README."
+limits = "Only a fake-model run exists; real-model Recall@5 and as-of accuracy are not yet measured."

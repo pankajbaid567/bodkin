@@ -1,0 +1,17 @@
+---
+name: Security engineer intern
+source: synthetic composite of typical wording
+must: cairn
+---
+Security Engineer Intern
+
+Responsibilities
+- Review authentication and authorization designs and find vulnerabilities.
+- Build tooling for secure defaults and tenant isolation.
+
+Requirements
+- Understanding of OAuth, OIDC, JWT and role-based access control.
+- Web security: OWASP Top 10, XSS, CSRF, injection and prompt injection.
+- Familiarity with TLS and encryption basics.
+- Experience with row-level security or multi-tenant data isolation is a plus.
+- Programming in Python or Go.

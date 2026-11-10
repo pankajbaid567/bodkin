@@ -1,0 +1,15 @@
+---
+name: ML engineer intern
+source: synthetic composite of typical wording
+gap: pytorch
+---
+Machine Learning Engineer Intern
+
+Responsibilities
+- Train and evaluate deep learning models and ship them to production.
+
+Requirements
+- Strong Python; PyTorch or TensorFlow.
+- Machine learning fundamentals, NLP or computer vision.
+- Experience with model training pipelines, MLOps and evaluation.
+- Familiarity with Hugging Face Transformers.

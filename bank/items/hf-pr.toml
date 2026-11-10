@@ -1,0 +1,20 @@
+id = "hf-pr"
+kind = "achievement"
+name = "Hugging Face Transformers contribution"
+title = "Hugging Face Transformers contribution"
+status = "shipped"
+date = ""
+end = ""
+tech = []
+links = {}
+archetypes = { ml = 0.7, genai = 0.5, devtools = 0.5 }
+skills = { huggingface = 1.0, transformers = 0.8, pytorch = 0.6, python = 0.7, codereview = 0.9, ml = 0.4 }
+note = "From the resume."
+
+[[claims]]
+id = "line"
+text = 'Merged a fix to Hugging Face Transformers (**168k**-star repo, PR #42373): TensorDict padding regression.'
+numbers = ["168", "42373"]
+[claims.proof]
+status = "reported"
+note = "From the resume."

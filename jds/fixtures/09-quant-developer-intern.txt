@@ -1,0 +1,19 @@
+---
+name: Quant developer intern (trading systems)
+source: synthetic composite of typical wording
+must: pitbook, cache-cluster
+must_not: cairn, vitram
+---
+Quantitative Developer Intern - Trading Systems
+
+About the role
+You will work on low latency trading systems: order matching, market data and execution.
+
+Requirements
+- Excellent C++ or Java; strong data structures and algorithms.
+- Concurrency, multithreading and memory management; performance profiling.
+- Understanding of networking (TCP/UDP) and operating systems.
+- Interest in financial markets and trading.
+
+Preferred
+- Experience with lock-free programming or high-performance systems.

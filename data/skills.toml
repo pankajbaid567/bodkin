@@ -1,0 +1,193 @@
+# Bodkin skill taxonomy. Edit freely; run `python -m bodkin taxonomy` to validate.
+#
+# Each skill:  id = { name, cat, arch = {archetype = weight 0..1}, aliases = [...], cs = [...], stop = [...] }
+#   aliases : matched case-insensitively with token boundaries
+#   cs      : matched case-sensitively (for words that are also ordinary English: Go, Spring, React, ...)
+#   stop    : phrases that cancel a match that overlaps them ("go to market" is not the Go language)
+# Archetypes say what kind of role a skill points to; weights are how strongly.
+
+[meta]
+archetypes = ["backend", "distributed", "fintech", "genai", "ml", "data", "infra", "systems", "lowlatency", "security", "fullstack", "mobile", "devtools"]
+# Aliases that deliberately belong to two skills ("C/C++" is both C and C++).
+shared_aliases = ["c/c++"]
+
+# A role pattern in the first lines of a JD (the title) adds a bonus to its archetype.
+[roles]
+backend = ["backend engineer", "back-end engineer", "back end engineer", "backend developer", "server-side", "api engineer", "platform engineer", "software development engineer", "sde"]
+distributed = ["distributed systems", "storage engineer", "infrastructure engineer", "systems engineer"]
+fintech = ["payments", "fintech", "payment engineer", "financial technology"]
+genai = ["generative ai", "genai", "llm engineer", "ai engineer", "applied ai", "agent engineer", "ai/ml engineer"]
+ml = ["machine learning", "ml engineer", "data scientist", "research engineer", "applied scientist"]
+data = ["data engineer", "analytics engineer", "data platform", "big data"]
+infra = ["devops", "site reliability", "sre", "cloud engineer", "infrastructure"]
+systems = ["embedded", "firmware", "kernel", "systems programmer", "driver", "hardware"]
+lowlatency = ["low latency", "low-latency", "quant developer", "quantitative developer", "trading systems", "hft", "quant"]
+security = ["security engineer", "application security", "appsec", "product security"]
+fullstack = ["full stack", "full-stack", "fullstack", "frontend engineer", "front-end engineer", "web developer"]
+mobile = ["android developer", "ios developer", "mobile engineer", "flutter developer", "mobile developer"]
+devtools = ["developer tools", "developer productivity", "tooling engineer", "build engineer"]
+
+[cities]
+names = ["bengaluru", "bangalore", "hyderabad", "pune", "mumbai", "chennai", "delhi", "gurgaon", "gurugram", "noida", "delhi ncr", "ncr", "kolkata", "ahmedabad", "kochi", "remote", "hybrid", "onsite", "on-site", "work from home"]
+
+[skills]
+# ---------------- languages ----------------
+python = { name = "Python", cat = "language", aliases = ["python3"], arch = { backend = 0.5, genai = 0.4, ml = 0.6, data = 0.6, devtools = 0.3 } }
+java = { name = "Java", cat = "language", aliases = ["j2ee", "java 8", "java 11", "java 17", "java 21", "jvm"], arch = { backend = 0.8, distributed = 0.5, fintech = 0.4 } }
+go = { name = "Go", cat = "language", aliases = ["golang"], cs = ["Go"], stop = ["go to market", "go-to-market", "go getter", "go-getter", "go live", "go beyond", "go above", "go the extra mile", "go ahead", "go-to", "go through", "go on"], arch = { backend = 0.6, distributed = 0.7, infra = 0.6, systems = 0.4 } }
+rust = { name = "Rust", cat = "language", aliases = ["rustlang"], cs = ["Rust"], arch = { systems = 0.7, lowlatency = 0.4, distributed = 0.5, infra = 0.4 } }
+c = { name = "C", cat = "language", aliases = ["c/c++"], cs = ["C programming", "C language", "ANSI C"], arch = { systems = 0.8, lowlatency = 0.3 } }
+cpp = { name = "C++", cat = "language", aliases = ["cpp", "c++11", "c++14", "c++17", "c++20", "c++", "c/c++"], arch = { systems = 0.7, lowlatency = 0.6, fintech = 0.3 } }
+javascript = { name = "JavaScript", cat = "language", aliases = ["javascript", "ecmascript", "es6"], cs = ["JS"], arch = { fullstack = 0.7, backend = 0.3 } }
+typescript = { name = "TypeScript", cat = "language", aliases = ["typescript"], arch = { fullstack = 0.7, backend = 0.4 } }
+kotlin = { name = "Kotlin", cat = "language", aliases = ["kotlin"], arch = { mobile = 0.8, backend = 0.4 } }
+swift = { name = "Swift", cat = "language", cs = ["Swift"], aliases = ["swiftui"], arch = { mobile = 0.9 } }
+scala = { name = "Scala", cat = "language", aliases = ["scala"], arch = { data = 0.7, distributed = 0.5, backend = 0.5 } }
+sql = { name = "SQL", cat = "language", aliases = ["sql", "t-sql", "pl/sql", "plsql"], arch = { data = 0.8, backend = 0.7 } }
+bash = { name = "Bash", cat = "language", aliases = ["bash", "shell scripting", "shell script", "shell scripts", "unix shell"], arch = { infra = 0.6, devtools = 0.4 } }
+haskell = { name = "Haskell", cat = "language", aliases = ["haskell", "purescript", "functional programming", "ocaml"], arch = { fintech = 0.4, backend = 0.3 } }
+csharp = { name = "C#", cat = "language", aliases = ["c#", "c sharp", ".net", "dotnet", "asp.net"], arch = { backend = 0.7 } }
+php = { name = "PHP", cat = "language", aliases = ["php", "laravel"], arch = { backend = 0.6, fullstack = 0.4 } }
+ruby = { name = "Ruby", cat = "language", aliases = ["ruby", "ruby on rails", "rails"], arch = { backend = 0.6, fullstack = 0.4 } }
+dart = { name = "Dart", cat = "language", aliases = ["dart"], arch = { mobile = 0.8 } }
+
+# ---------------- frameworks and libraries ----------------
+react = { name = "React", cat = "framework", aliases = ["react.js", "reactjs"], cs = ["React"], arch = { fullstack = 0.9 } }
+nextjs = { name = "Next.js", cat = "framework", aliases = ["next.js", "nextjs", "next js"], arch = { fullstack = 0.8 } }
+nodejs = { name = "Node.js", cat = "framework", aliases = ["node.js", "nodejs", "node js"], arch = { backend = 0.8, fullstack = 0.6 } }
+express = { name = "Express.js", cat = "framework", aliases = ["express.js", "expressjs"], arch = { backend = 0.7 } }
+fastapi = { name = "FastAPI", cat = "framework", aliases = ["fastapi"], arch = { backend = 0.8, genai = 0.3 } }
+django = { name = "Django", cat = "framework", aliases = ["django", "django rest framework", "drf"], arch = { backend = 0.8 } }
+flask = { name = "Flask", cat = "framework", aliases = ["flask"], arch = { backend = 0.7 } }
+spring = { name = "Spring Boot", cat = "framework", aliases = ["spring boot", "springboot", "spring framework", "spring mvc"], cs = ["Spring"], arch = { backend = 0.9, fintech = 0.3 } }
+nestjs = { name = "NestJS", cat = "framework", aliases = ["nestjs", "nest.js"], arch = { backend = 0.8 } }
+fastify = { name = "Fastify", cat = "framework", aliases = ["fastify"], arch = { backend = 0.6 } }
+grpc = { name = "gRPC", cat = "framework", aliases = ["grpc", "protobuf", "protocol buffers", "thrift"], arch = { backend = 0.6, distributed = 0.7 } }
+graphql = { name = "GraphQL", cat = "framework", aliases = ["graphql"], arch = { backend = 0.6, fullstack = 0.5 } }
+rest = { name = "REST APIs", cat = "framework", aliases = ["restful", "rest api", "rest apis", "restful api", "restful apis", "restful services", "rest services"], cs = ["REST"], arch = { backend = 0.8, fullstack = 0.4 } }
+websocket = { name = "WebSockets", cat = "framework", aliases = ["websocket", "websockets", "server-sent events", "real-time communication", "realtime communication"], arch = { backend = 0.5, fullstack = 0.5 } }
+redux = { name = "Redux", cat = "framework", aliases = ["redux", "zustand", "state management"], arch = { fullstack = 0.7 } }
+tailwind = { name = "Tailwind", cat = "framework", aliases = ["tailwind", "tailwindcss", "tailwind css"], arch = { fullstack = 0.6 } }
+prisma = { name = "Prisma ORM", cat = "framework", aliases = ["prisma", "sqlalchemy", "hibernate", "typeorm", "orm", "orms"], arch = { backend = 0.5 } }
+vue = { name = "Vue", cat = "framework", aliases = ["vue.js", "vuejs", "vue 3"], cs = ["Vue"], arch = { fullstack = 0.8 } }
+angular = { name = "Angular", cat = "framework", aliases = ["angular", "angularjs"], arch = { fullstack = 0.8 } }
+htmlcss = { name = "HTML/CSS", cat = "framework", aliases = ["html", "css", "html5", "css3", "sass", "scss"], arch = { fullstack = 0.6 } }
+frontend = { name = "Frontend", cat = "framework", aliases = ["frontend", "front-end", "front end", "ui development", "web development", "responsive design"], arch = { fullstack = 0.8 } }
+
+# ---------------- data stores and pipelines ----------------
+postgres = { name = "PostgreSQL", cat = "data", aliases = ["postgresql", "postgres", "psql", "pgvector"], arch = { backend = 0.8, data = 0.6, fintech = 0.4 } }
+mysql = { name = "MySQL", cat = "data", aliases = ["mysql", "mariadb"], arch = { backend = 0.7, data = 0.5 } }
+mongodb = { name = "MongoDB", cat = "data", aliases = ["mongodb", "mongo db", "mongoose"], arch = { backend = 0.6, data = 0.4 } }
+redis = { name = "Redis", cat = "data", aliases = ["redis", "memcached", "valkey"], arch = { backend = 0.6, distributed = 0.6, lowlatency = 0.3 } }
+cassandra = { name = "Cassandra", cat = "data", aliases = ["cassandra", "scylladb", "hbase", "bigtable"], arch = { distributed = 0.9, data = 0.6 } }
+dynamodb = { name = "DynamoDB", cat = "data", aliases = ["dynamodb", "cosmos db", "cosmosdb"], arch = { distributed = 0.6, backend = 0.5 } }
+elasticsearch = { name = "Elasticsearch", cat = "data", aliases = ["elasticsearch", "opensearch", "solr", "lucene", "full-text search", "search engine", "search infrastructure"], arch = { backend = 0.5, data = 0.6, distributed = 0.5 } }
+sqlite = { name = "SQLite", cat = "data", aliases = ["sqlite"], arch = { backend = 0.3 } }
+kafka = { name = "Kafka", cat = "data", aliases = ["kafka", "kinesis", "pulsar", "event streaming"], arch = { data = 0.8, distributed = 0.8, backend = 0.5 } }
+rabbitmq = { name = "RabbitMQ", cat = "data", aliases = ["rabbitmq", "sqs", "celery", "bullmq", "activemq"], arch = { backend = 0.6, distributed = 0.5 } }
+spark = { name = "Spark", cat = "data", aliases = ["pyspark", "apache spark", "spark sql", "spark streaming"], cs = ["Spark"], arch = { data = 1.0, distributed = 0.6 } }
+flink = { name = "Flink", cat = "data", aliases = ["flink", "apache beam", "stream processing", "streaming data", "real-time data"], arch = { data = 0.9, distributed = 0.6 } }
+airflow = { name = "Airflow", cat = "data", aliases = ["airflow", "dagster", "prefect", "orchestration", "workflow orchestration"], arch = { data = 0.8, infra = 0.3 } }
+snowflake = { name = "Snowflake", cat = "data", cs = ["Snowflake"], aliases = ["redshift", "data warehouse", "data warehousing", "lakehouse", "delta lake", "databricks"], arch = { data = 0.9 } }
+bigquery = { name = "BigQuery", cat = "data", aliases = ["bigquery", "clickhouse", "duckdb", "olap", "columnar"], arch = { data = 0.8 } }
+hadoop = { name = "Hadoop", cat = "data", aliases = ["hadoop", "hdfs", "mapreduce", "hive", "big data"], arch = { data = 0.8, distributed = 0.6 } }
+etl = { name = "ETL pipelines", cat = "data", aliases = ["etl", "elt", "data pipeline", "data pipelines", "etl pipelines", "data ingestion", "dbt", "change data capture", "cdc"], arch = { data = 0.9 } }
+nosql = { name = "NoSQL", cat = "data", aliases = ["nosql", "non-relational", "key-value store", "key value store", "kv store"], arch = { backend = 0.4, distributed = 0.5, data = 0.4 } }
+analytics = { name = "Data analysis", cat = "data", aliases = ["pandas", "numpy", "data analysis", "data analytics", "business intelligence", "tableau", "power bi"], arch = { data = 0.6, ml = 0.4 } }
+
+# ---------------- cloud, infra, devops ----------------
+aws = { name = "AWS", cat = "cloud", aliases = ["aws", "amazon web services", "ec2", "s3", "aws lambda", "cloudformation", "ecs", "eks", "rds", "sns"], arch = { infra = 0.7, backend = 0.5, distributed = 0.3 } }
+gcp = { name = "GCP", cat = "cloud", aliases = ["gcp", "google cloud", "google cloud platform", "cloud run", "gke"], arch = { infra = 0.7, backend = 0.4 } }
+azure = { name = "Azure", cat = "cloud", aliases = ["azure", "azure devops"], arch = { infra = 0.7, backend = 0.4 } }
+docker = { name = "Docker", cat = "cloud", aliases = ["docker", "containers", "containerization", "containerisation", "container", "docker compose"], arch = { infra = 0.8, backend = 0.4, devtools = 0.3 } }
+kubernetes = { name = "Kubernetes", cat = "cloud", aliases = ["kubernetes", "k8s", "helm", "k3s", "kubectl", "service mesh", "istio", "envoy"], arch = { infra = 1.0, distributed = 0.5 } }
+terraform = { name = "Terraform", cat = "cloud", aliases = ["terraform", "infrastructure as code", "iac", "pulumi"], arch = { infra = 0.9 } }
+ansible = { name = "Ansible", cat = "cloud", aliases = ["ansible", "puppet", "chef", "configuration management"], arch = { infra = 0.8 } }
+linux = { name = "Linux", cat = "cloud", aliases = ["linux", "unix", "ubuntu", "debian", "systemd"], arch = { infra = 0.6, systems = 0.7, backend = 0.3 } }
+nginx = { name = "Nginx", cat = "cloud", aliases = ["nginx", "haproxy", "reverse proxy", "api gateway"], arch = { infra = 0.6, backend = 0.4 } }
+cicd = { name = "CI/CD", cat = "cloud", aliases = ["ci/cd", "ci cd", "cicd", "continuous integration", "continuous delivery", "continuous deployment", "github actions", "jenkins", "gitlab ci", "circleci", "build pipelines", "deployment pipelines"], arch = { infra = 0.8, devtools = 0.7, backend = 0.3 } }
+observability = { name = "Observability", cat = "cloud", aliases = ["observability", "monitoring", "tracing", "distributed tracing", "telemetry", "alerting", "logging"], arch = { infra = 0.8, backend = 0.4, distributed = 0.4 } }
+prometheus = { name = "Prometheus", cat = "cloud", aliases = ["prometheus", "grafana", "datadog", "new relic", "splunk", "loki"], arch = { infra = 0.8 } }
+opentelemetry = { name = "OpenTelemetry", cat = "cloud", aliases = ["opentelemetry", "otel", "jaeger", "zipkin"], arch = { infra = 0.8, distributed = 0.4 } }
+cloudflare = { name = "Cloudflare", cat = "cloud", aliases = ["cloudflare", "cloudflare workers", "edge computing", "edge functions", "cdn", "r2"], arch = { infra = 0.5, backend = 0.4, security = 0.3 } }
+serverless = { name = "Serverless", cat = "cloud", aliases = ["serverless", "lambda functions", "faas", "cloud functions"], arch = { infra = 0.5, backend = 0.5 } }
+git = { name = "Git", cat = "tool", aliases = ["git", "github", "gitlab", "version control", "bitbucket"], arch = { devtools = 0.3 } }
+reliability = { name = "SRE / reliability", cat = "practice", aliases = ["site reliability", "sre", "slo", "slos", "sla", "reliability engineering", "incident response", "on-call", "oncall", "postmortems", "high availability", "uptime", "disaster recovery"], arch = { infra = 0.9, distributed = 0.4 } }
+
+# ---------------- systems and distributed concepts ----------------
+distsys = { name = "Distributed systems", cat = "concept", aliases = ["distributed systems", "distributed system", "distributed computing", "distributed architecture", "distributed databases", "fault tolerance", "fault-tolerant", "scalable systems", "scalability", "large scale systems", "large-scale systems"], arch = { distributed = 1.0, backend = 0.5, infra = 0.3 } }
+consensus = { name = "Consensus (Raft/Paxos)", cat = "concept", aliases = ["raft", "paxos", "consensus", "leader election", "quorum", "zookeeper", "etcd"], arch = { distributed = 1.0 } }
+replication = { name = "Replication", cat = "concept", aliases = ["replication", "replicated", "replica", "replicas", "failover", "cap theorem", "eventual consistency", "linearizability", "consistency models"], arch = { distributed = 0.9, data = 0.3 } }
+sharding = { name = "Sharding", cat = "concept", aliases = ["sharding", "sharded", "partitioning", "consistent hashing", "horizontal scaling"], arch = { distributed = 0.8, backend = 0.4 } }
+caching = { name = "Caching", cat = "concept", aliases = ["caching", "cache", "caches", "lru", "cache invalidation", "cdn caching"], arch = { backend = 0.6, distributed = 0.5, lowlatency = 0.4 } }
+wal = { name = "Write-ahead log", cat = "concept", aliases = ["write-ahead log", "write ahead log", "wal", "journaling", "durability", "crash recovery", "event log", "commit log"], arch = { distributed = 0.8, systems = 0.6, backend = 0.4 } }
+lsm = { name = "LSM-tree / storage engines", cat = "concept", aliases = ["lsm", "lsm-tree", "lsm tree", "log-structured", "storage engine", "storage engines", "sstable", "rocksdb", "leveldb", "compaction", "bloom filter"], arch = { distributed = 0.8, systems = 0.7, data = 0.5 } }
+btree = { name = "B-trees / indexing", cat = "concept", aliases = ["b-tree", "b-trees", "b+ tree", "b+tree", "btree", "buffer pool", "database internals", "query engine", "query planner"], arch = { systems = 0.7, data = 0.6, distributed = 0.4 } }
+concurrency = { name = "Concurrency", cat = "concept", aliases = ["concurrency", "concurrent", "multithreading", "multi-threading", "multithreaded", "multi-threaded", "thread-safe", "thread safety", "thread safe", "synchronization", "synchronisation", "mutex", "mutexes", "semaphore", "semaphores", "deadlock", "deadlocks", "race condition", "race conditions", "parallelism", "parallel programming", "goroutines"], arch = { systems = 0.7, lowlatency = 0.7, backend = 0.5, distributed = 0.5, fintech = 0.3 } }
+lockfree = { name = "Lock-free programming", cat = "concept", aliases = ["lock-free", "lock free", "wait-free", "atomics", "memory ordering", "cas operations"], arch = { lowlatency = 0.9, systems = 0.8 } }
+lowlatency = { name = "Low latency", cat = "concept", aliases = ["low latency", "low-latency", "latency-sensitive", "ultra-low latency", "high-frequency", "high frequency trading", "hft", "microsecond", "microseconds", "nanosecond"], arch = { lowlatency = 1.0, systems = 0.5, fintech = 0.4 } }
+performance = { name = "Performance engineering", cat = "concept", aliases = ["performance optimization", "performance optimisation", "performance tuning", "profiling", "benchmarking", "throughput", "latency", "high performance", "high-performance", "load testing", "k6"], arch = { backend = 0.4, lowlatency = 0.6, systems = 0.5, infra = 0.3 } }
+memory = { name = "Memory management", cat = "concept", aliases = ["memory management", "garbage collection", "memory model", "memory safety", "valgrind", "memory leaks", "cache locality"], arch = { systems = 0.8, lowlatency = 0.6 } }
+os = { name = "Operating systems", cat = "concept", aliases = ["operating systems", "operating system", "kernel", "linux kernel", "scheduler", "process scheduling", "virtual memory", "device drivers", "kernel drivers", "rtos", "xv6", "syscalls", "system calls"], arch = { systems = 1.0, lowlatency = 0.3 } }
+embedded = { name = "Embedded systems", cat = "concept", aliases = ["embedded", "firmware", "microcontroller", "microcontrollers", "arm cortex", "bare metal", "bare-metal", "i2c", "spi", "uart", "fpga", "verilog", "vhdl", "computer architecture", "soc"], arch = { systems = 1.0 } }
+networking = { name = "Networking", cat = "concept", aliases = ["computer networks", "computer networking", "networking", "tcp/ip", "tcp", "udp", "sockets", "socket programming", "dns", "load balancing", "load balancer", "http/2", "http/3", "quic", "bgp", "network protocols"], arch = { systems = 0.6, infra = 0.5, backend = 0.4, lowlatency = 0.4 } }
+http = { name = "HTTP / web protocols", cat = "concept", aliases = ["http", "https", "tls", "web protocols"], arch = { backend = 0.4 } }
+ratelimit = { name = "Rate limiting", cat = "concept", aliases = ["rate limiting", "rate limiter", "rate limiters", "throttling", "token bucket", "backpressure"], arch = { backend = 0.6, distributed = 0.4 } }
+idempotency = { name = "Idempotency", cat = "concept", aliases = ["idempotency", "idempotent", "exactly-once", "exactly once", "at-least-once", "at least once", "deduplication", "de-duplication", "retries"], arch = { backend = 0.7, fintech = 0.6, distributed = 0.6 } }
+eventsourcing = { name = "Event sourcing", cat = "concept", aliases = ["event sourcing", "event-sourced", "event driven", "event-driven", "cqrs", "outbox pattern", "saga pattern", "sagas"], arch = { backend = 0.6, distributed = 0.6, fintech = 0.4 } }
+microservices = { name = "Microservices", cat = "concept", aliases = ["microservices", "microservice", "service-oriented", "soa", "inter-service communication"], arch = { backend = 0.7, distributed = 0.5 } }
+queue = { name = "Queues / messaging", cat = "concept", aliases = ["message queue", "message queues", "messaging systems", "pub/sub", "pubsub", "job queue", "task queue", "background jobs", "queues", "message broker"], arch = { backend = 0.6, distributed = 0.6 } }
+dbdesign = { name = "Database design", cat = "concept", aliases = ["database design", "schema design", "data modeling", "normalization", "normalisation", "relational databases", "relational database", "rdbms", "database management"], arch = { backend = 0.7, data = 0.6 } }
+queryopt = { name = "Query optimization", cat = "concept", aliases = ["query optimization", "query optimisation", "indexing", "query performance", "execution plans", "explain analyze", "database optimization"], arch = { backend = 0.6, data = 0.6 } }
+transactions = { name = "Transactions / ACID", cat = "concept", aliases = ["transactions", "acid", "isolation levels", "mvcc", "two-phase commit", "2pc", "optimistic locking", "serializability"], arch = { backend = 0.6, fintech = 0.6, distributed = 0.5, data = 0.4 } }
+sysdesign = { name = "System design", cat = "practice", aliases = ["system design", "high level design", "high-level design", "hld", "low level design", "low-level design", "lld", "design patterns", "software architecture", "architecture", "design systems at scale"], arch = { backend = 0.6, distributed = 0.5 } }
+dsa = { name = "Data structures & algorithms", cat = "practice", aliases = ["data structures", "algorithms", "algorithm", "dsa", "competitive programming", "problem solving", "problem-solving", "leetcode", "codeforces", "complexity analysis"], arch = { backend = 0.3, lowlatency = 0.3, systems = 0.3 } }
+oop = { name = "OOP", cat = "practice", aliases = ["object oriented", "object-oriented", "oop", "oops", "solid principles"], arch = { backend = 0.4 } }
+apidesign = { name = "API design", cat = "practice", aliases = ["api design", "api development", "backend services", "backend development", "backend systems", "web services", "server-side development", "building apis", "developing apis"], arch = { backend = 0.9 } }
+testing = { name = "Testing", cat = "practice", aliases = ["unit testing", "unit tests", "integration testing", "integration tests", "test automation", "tdd", "test-driven", "pytest", "junit", "testing", "code coverage"], arch = { backend = 0.3, devtools = 0.4 } }
+proptest = { name = "Property-based testing / fuzzing", cat = "practice", aliases = ["property-based testing", "property based testing", "fuzzing", "fuzz testing", "hypothesis", "mutation testing", "chaos engineering", "fault injection", "jepsen"], arch = { distributed = 0.5, systems = 0.5, security = 0.3, devtools = 0.4 } }
+agile = { name = "Agile", cat = "practice", aliases = ["agile", "scrum", "sprint planning", "kanban"], arch = {} }
+codereview = { name = "Code review", cat = "practice", aliases = ["code review", "code reviews", "pull requests", "open source", "open-source", "contributions to open source"], arch = { devtools = 0.4 } }
+devtools = { name = "Developer tooling", cat = "practice", aliases = ["developer tools", "developer tooling", "developer productivity", "developer experience", "cli tools", "sdk", "sdks", "build systems", "build tooling", "internal tools", "internal tooling", "static analysis", "compilers", "compiler", "interpreters", "language server"], arch = { devtools = 1.0 } }
+
+# ---------------- AI / ML ----------------
+llm = { name = "LLMs", cat = "ai", aliases = ["large language models", "large language model", "llm", "llms", "gpt", "language models", "claude", "gemini", "openai"], arch = { genai = 1.0, ml = 0.4 } }
+genai = { name = "GenAI", cat = "ai", cs = ["AI"], aliases = ["generative ai", "gen ai", "genai", "gen-ai", "foundation models", "ai applications", "ai-powered", "ai powered"], arch = { genai = 1.0 } }
+rag = { name = "RAG", cat = "ai", aliases = ["retrieval augmented generation", "retrieval-augmented generation", "retrieval augmented", "semantic search"], cs = ["RAG"], arch = { genai = 1.0, data = 0.3 } }
+agents = { name = "AI agents", cat = "ai", aliases = ["ai agents", "agentic", "agentic ai", "multi-agent", "multi agent", "autonomous agents", "agent frameworks", "tool use", "tool calling", "function calling", "agent workflows", "agentic workflows"], arch = { genai = 1.0, devtools = 0.3 } }
+mcp = { name = "MCP", cat = "ai", aliases = ["model context protocol", "mcp servers", "mcp server"], cs = ["MCP"], arch = { genai = 0.9, devtools = 0.5 } }
+langchain = { name = "LangChain / LangGraph", cat = "ai", aliases = ["langchain", "langgraph", "llamaindex", "llama index", "crewai", "autogen", "semantic kernel"], arch = { genai = 0.9 } }
+prompteng = { name = "Prompt engineering", cat = "ai", aliases = ["prompt engineering", "prompting", "prompt design", "prompts", "few-shot", "chain of thought"], arch = { genai = 0.8 } }
+vectordb = { name = "Vector search", cat = "ai", aliases = ["vector database", "vector databases", "vector search", "vector store", "pinecone", "weaviate", "faiss", "chroma", "qdrant", "embeddings", "embedding models", "similarity search"], arch = { genai = 0.8, data = 0.4 } }
+finetune = { name = "Fine-tuning", cat = "ai", aliases = ["fine-tuning", "fine tuning", "finetuning", "lora", "qlora", "peft", "rlhf", "instruction tuning", "distillation"], arch = { genai = 0.7, ml = 0.8 } }
+evals = { name = "LLM evaluation", cat = "ai", aliases = ["llm evaluation", "model evaluation", "evals", "eval harness", "evaluation frameworks", "evaluation harness", "red teaming", "red-teaming", "guardrails", "hallucination", "benchmark suites"], arch = { genai = 0.9, ml = 0.5 } }
+pytorch = { name = "PyTorch", cat = "ai", aliases = ["pytorch", "torch", "jax"], arch = { ml = 1.0, genai = 0.4 } }
+tensorflow = { name = "TensorFlow", cat = "ai", aliases = ["tensorflow", "keras"], arch = { ml = 0.9 } }
+huggingface = { name = "Hugging Face", cat = "ai", aliases = ["hugging face", "huggingface", "transformers library", "hf transformers"], arch = { ml = 0.8, genai = 0.7 } }
+transformers = { name = "Transformers", cat = "ai", aliases = ["transformers", "transformer models", "attention mechanism", "bert", "diffusion models"], arch = { ml = 0.8, genai = 0.5 } }
+mlops = { name = "MLOps", cat = "ai", aliases = ["mlops", "model deployment", "model serving", "feature store", "ml pipelines", "ml platform", "mlflow", "kubeflow", "model monitoring", "ml infrastructure"], arch = { ml = 0.7, infra = 0.5, data = 0.4, genai = 0.3 } }
+inference = { name = "Inference serving", cat = "ai", aliases = ["model inference", "llm inference", "inference serving", "inference optimization", "vllm", "triton inference", "onnx", "quantization", "tensorrt", "cuda", "gpu programming", "kv cache"], arch = { ml = 0.6, systems = 0.6, genai = 0.5 } }
+nlp = { name = "NLP", cat = "ai", aliases = ["nlp", "natural language processing", "text classification", "named entity recognition", "sentiment analysis", "speech recognition"], arch = { ml = 0.9, genai = 0.4 } }
+cv = { name = "Computer vision", cat = "ai", aliases = ["computer vision", "opencv", "image processing", "object detection", "image classification", "yolo"], arch = { ml = 0.9 } }
+recsys = { name = "Recommender systems", cat = "ai", aliases = ["recommendation systems", "recommender systems", "recommendation engine", "recommendation", "ranking models", "learning to rank"], arch = { ml = 0.8, data = 0.4 } }
+ml = { name = "Machine learning", cat = "ai", cs = ["ML"], aliases = ["machine learning", "ml models", "deep learning", "neural networks", "scikit-learn", "sklearn", "xgboost", "model training", "statistics", "statistical modeling"], arch = { ml = 1.0 } }
+
+# ---------------- fintech and trading ----------------
+payments = { name = "Payments", cat = "fintech", aliases = ["payment", "payments", "payment gateway", "payment systems", "upi", "checkout", "settlement", "settlements", "reconciliation", "payouts", "card payments", "payment processing", "psp"], arch = { fintech = 1.0, backend = 0.4 } }
+ledger = { name = "Ledgers", cat = "fintech", aliases = ["ledger", "ledgers", "double-entry", "double entry", "accounting systems", "bookkeeping", "financial systems"], arch = { fintech = 0.9, backend = 0.4 } }
+trading = { name = "Trading systems", cat = "fintech", aliases = ["trading", "trading systems", "order book", "order matching", "matching engine", "market data", "stock exchange", "quant", "algorithmic trading", "market making", "execution systems", "fix protocol"], arch = { fintech = 0.8, lowlatency = 0.8, systems = 0.3 } }
+fraud = { name = "Fraud and risk", cat = "fintech", aliases = ["fraud detection", "fraud", "risk engine", "risk management", "anti-money laundering", "aml", "kyc", "credit risk"], arch = { fintech = 0.8, ml = 0.4 } }
+banking = { name = "Banking / financial services", cat = "fintech", aliases = ["banking", "financial services", "fintech", "lending", "insurance", "capital markets", "wealth management", "personal finance"], arch = { fintech = 0.7 } }
+
+# ---------------- security ----------------
+authn = { name = "Authentication / authorization", cat = "security", aliases = ["authentication", "authorization", "authorisation", "oauth", "oauth2", "oidc", "openid", "sso", "jwt", "rbac", "iam", "access control", "single sign-on", "saml"], arch = { security = 0.9, backend = 0.4 } }
+rls = { name = "Row-level security", cat = "security", aliases = ["row level security", "row-level security", "rls", "multi-tenant", "multi-tenancy", "multitenancy", "tenant isolation", "data isolation", "least privilege"], arch = { security = 0.8, backend = 0.4, data = 0.3 } }
+crypto = { name = "Cryptography", cat = "security", aliases = ["encryption", "cryptography", "pki", "hashing", "digital signatures", "hmac", "key management", "secrets management", "kms", "zero trust"], arch = { security = 0.9 } }
+websec = { name = "Application security", cat = "security", aliases = ["owasp", "web security", "application security", "appsec", "xss", "csrf", "sql injection", "penetration testing", "pentesting", "vulnerability", "vulnerabilities", "threat modeling", "threat modelling", "secure coding", "prompt injection", "ctf"], arch = { security = 1.0 } }
+
+# ---------------- mobile and frontend extras ----------------
+reactnative = { name = "React Native", cat = "mobile", aliases = ["react native", "expo"], arch = { mobile = 0.9, fullstack = 0.4 } }
+flutter = { name = "Flutter", cat = "mobile", aliases = ["flutter"], arch = { mobile = 0.9 } }
+android = { name = "Android", cat = "mobile", aliases = ["android", "jetpack compose", "android sdk"], arch = { mobile = 0.9 } }
+ios = { name = "iOS", cat = "mobile", aliases = ["ios", "uikit", "xcode", "cocoa"], arch = { mobile = 0.9 } }
+accessibility = { name = "Accessibility", cat = "practice", aliases = ["accessibility", "a11y", "wcag"], arch = { fullstack = 0.5 } }

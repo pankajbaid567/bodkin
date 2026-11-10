@@ -1,0 +1,56 @@
+id = "taskflow"
+kind = "project"
+name = "Resilient TaskFlow"
+title = "Resilient TaskFlow – Crash-safe distributed job queue"
+status = "shipped"
+date = "September 2026"
+end = "2026-09"
+repo = "../../../Resilient_TaskFlow"
+tech = ["Node.js", "Fastify", "TypeScript", "PostgreSQL", "Redis Streams", "k6", "Docker", "GitHub Actions"]
+links = {}
+archetypes = { backend = 0.9, distributed = 0.9, infra = 0.4 }
+skills = { nodejs = 1.0, typescript = 1.0, fastify = 1.0, postgres = 0.9, redis = 1.0, queue = 1.0, idempotency = 1.0, eventsourcing = 0.8, concurrency = 0.7, performance = 0.8, testing = 0.9, docker = 0.8, cicd = 0.8, rest = 0.8, authn = 0.5, distsys = 0.8, apidesign = 0.7 }
+note = "Numbers come from the current resume; GitHub and demo links are on the resume but not recorded here yet (add them to links). Not re-run by Bodkin's author."
+
+[[claims]]
+id = "outbox-leases"
+group = "durability"
+text = 'Designed outbox and fenced leases on PostgreSQL + Redis Streams: **0** of **10,000** jobs lost on SIGKILL.'
+numbers = ["0", "10,000"]
+skills = { queue = 1.0, eventsourcing = 1.0, distsys = 0.9, postgres = 0.8, redis = 0.9, idempotency = 0.6 }
+[claims.variants]
+fintech = 'Outbox and fenced leases on PostgreSQL + Redis Streams: no job lost or run twice, **0** of **10,000** lost on SIGKILL.'
+[claims.proof]
+status = "reported"
+note = "From the resume."
+limits = "Process crash (SIGKILL)."
+
+[[claims]]
+id = "benchmark"
+group = "performance"
+text = 'Benchmarked with k6 on one laptop: **500** submissions/s, p99 **346** ms, **0** errors (one API process).'
+numbers = ["500", "346", "0"]
+skills = { performance = 1.0 }
+[claims.proof]
+status = "reported"
+note = "From the resume."
+
+[[claims]]
+id = "api"
+group = "design"
+text = 'Implemented **14** REST endpoints on Node.js, Fastify, TypeScript with JWT auth and idempotency keys.'
+numbers = ["14"]
+skills = { nodejs = 1.0, fastify = 1.0, typescript = 1.0, rest = 1.0, authn = 0.7, idempotency = 0.9, apidesign = 0.9 }
+[claims.proof]
+status = "reported"
+note = "From the resume."
+
+[[claims]]
+id = "tests"
+group = "testing"
+text = 'Verified with **300+** tests, incl. **46** Docker integration tests with real workers, in GitHub Actions CI.'
+numbers = ["300", "46"]
+skills = { testing = 1.0, docker = 0.9, cicd = 1.0 }
+[claims.proof]
+status = "reported"
+note = "From the resume."

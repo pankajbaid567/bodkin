@@ -1,0 +1,17 @@
+---
+name: Full stack engineer intern (startup)
+source: synthetic composite of typical wording
+must: vitram
+must_not: cache-cluster
+---
+Full Stack Engineer Intern
+
+What you will do
+- Ship product features across the stack: React, Next.js and Node.js or Python backends.
+- Own deployments and monitor performance.
+
+Requirements
+- React, TypeScript and Next.js; REST APIs.
+- PostgreSQL or MongoDB, schema design.
+- Familiarity with Tailwind and responsive UI.
+- Strong product sense and communication.

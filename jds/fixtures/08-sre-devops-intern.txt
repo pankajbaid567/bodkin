@@ -1,0 +1,19 @@
+---
+name: SRE / DevOps intern
+source: synthetic composite of typical wording
+one_of: taskflow, pitbook, cache-cluster
+must_not: cairn
+gap: kubernetes
+---
+Site Reliability Engineer Intern
+
+Responsibilities
+- Operate services in production, build monitoring and automate toil.
+- Take part in incident response and write postmortems.
+
+Requirements
+- Linux fundamentals and networking.
+- Docker and Kubernetes; infrastructure as code with Terraform.
+- CI/CD pipelines (GitHub Actions or Jenkins).
+- Observability: Prometheus, Grafana, OpenTelemetry.
+- Scripting in Python, Go or Bash.

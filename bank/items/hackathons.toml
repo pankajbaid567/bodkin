@@ -1,0 +1,20 @@
+id = "hackathons"
+kind = "achievement"
+name = "Hackathons"
+title = "Hackathons"
+status = "shipped"
+date = ""
+end = ""
+tech = []
+links = {}
+archetypes = { fullstack = 0.5, mobile = 0.3 }
+skills = {}
+note = "From the resume."
+
+[[claims]]
+id = "line"
+text = 'Winner at LMNIT-AOSSIE Unstoppable Hackathon; 2nd place in the app-development hackathon at IIT Roorkee Cognizance out of **500** participants.'
+numbers = ["2", "500"]
+[claims.proof]
+status = "reported"
+note = "From the resume."

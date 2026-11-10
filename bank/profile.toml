@@ -1,0 +1,17 @@
+# Facts used for eligibility checks and for the resume's skills section.
+# The skills lists mirror SDE_Backend.pdf. Bodkin only re-orders them; it never adds a skill.
+# Suggestions for skills you could truthfully add come from your items (see `bodkin analyze` > gaps).
+[person]
+name = "Pankaj Baid"
+degree = "B.Tech Computer Science and AI"
+institute = "Newton School of Technology, Rishihood University"
+batch = 2028
+cgpa = 8.618
+# Cities you would take. Leave empty for "no preference".
+locations_ok = ["bengaluru", "hyderabad", "pune", "mumbai", "chennai", "delhi", "delhi ncr", "gurgaon", "gurugram", "noida", "remote", "hybrid"]
+
+[skills]
+"Databases & Data Tools" = ["MySQL", "MongoDB", "PostgreSQL"]
+"Frameworks & Libraries" = ["Tailwind", "Next JS", "React Native", "Prisma ORM", "React", "Redux", "Node.js", "Express JS", "FastAPI"]
+"Computer Language" = ["Python", "JavaScript", "C++", "TypeScript", "SQL"]
+"Generative AI & LLMs" = ["RAG", "LangChain", "LangGraph", "LLM", "GenAI", "Hugging Face"]

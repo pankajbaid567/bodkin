@@ -1,0 +1,16 @@
+---
+name: Amazon SDE intern
+source: synthetic composite of typical wording
+one_of: taskflow, pitbook, cache-cluster
+---
+Software Development Engineer Intern
+
+Basic qualifications
+- Currently enrolled in a Bachelor's degree in Computer Science, graduating in 2028.
+- Programming experience with at least one modern language such as Java, C++, Python or C#.
+- Knowledge of computer science fundamentals: object-oriented design, data structures, algorithms and complexity analysis.
+
+Preferred qualifications
+- Experience building services on AWS.
+- Exposure to low level design and system design.
+- Demonstrated ownership of projects.

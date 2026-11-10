@@ -1,0 +1,21 @@
+---
+name: GenAI engineer, GCC (fresher)
+source: synthetic composite of typical wording
+must: cairn
+must_not: cache-cluster
+---
+Generative AI Engineer (0-2 years) - Hyderabad
+
+What you will do
+- Build LLM applications using retrieval augmented generation (RAG) over enterprise data.
+- Design agent workflows with tool calling and MCP servers.
+- Build evaluation harnesses to measure answer quality and hallucination.
+
+What you need
+- Strong Python; FastAPI for serving.
+- Hands-on with vector databases and embeddings.
+- Experience with LangChain or LangGraph, prompt engineering and LLM evaluation.
+- Understanding of access control and data privacy for enterprise AI.
+
+Nice to have
+- Fine-tuning with LoRA; Hugging Face experience.

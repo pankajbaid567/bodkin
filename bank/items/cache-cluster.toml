@@ -1,0 +1,63 @@
+id = "cache-cluster"
+kind = "project"
+name = "cache-cluster"
+title = "cache-cluster – Sharded in-memory cache with W-TinyLFU in Go"
+status = "wip"
+date = "November 2026"
+end = "2026-11"
+repo = "../../../cache-cluster"
+tech = ["Go", "RESP2", "TCP", "Docker", "GitHub Actions"]
+links = {}
+archetypes = { distributed = 0.9, systems = 0.7, backend = 0.6, lowlatency = 0.5, infra = 0.3 }
+skills = { go = 1.0, caching = 1.0, sharding = 1.0, concurrency = 0.9, networking = 0.8, performance = 0.9, proptest = 0.5, testing = 0.8, docker = 0.6, cicd = 0.5, redis = 0.5, distsys = 0.7, observability = 0.4, dsa = 0.6 }
+note = "WIP: complete locally but the repo has no git commit or public link yet. Numbers are from its BENCHMARKS.md and DESIGN.md, not re-run by Bodkin's author. It is a sharded cache, not a fault-tolerant database: no replication or persistence."
+
+[[claims]]
+id = "design"
+group = "design"
+text = 'Built a sharded Go cache: W-TinyLFU eviction, consistent-hash client ring, singleflight stampede protection, RESP2-subset server.'
+numbers = []
+skills = { go = 1.0, caching = 1.0, sharding = 1.0, networking = 0.7, concurrency = 0.8, dsa = 0.7 }
+[claims.proof]
+status = "reported"
+command = "go test -race ./..."
+artifact = "README.md"
+note = "From the cache-cluster README."
+limits = "No replication, no persistence, static membership."
+
+[[claims]]
+id = "traces"
+group = "evaluation"
+text = 'Evaluated policies on real Twitter traces: W-TinyLFU beat LRU by up to **11.5** hit-ratio points and lost once, at the smallest size.'
+numbers = ["11.5"]
+skills = { caching = 1.0, performance = 0.8, dsa = 0.5 }
+[claims.proof]
+status = "reported"
+command = "make docs"
+artifact = "BENCHMARKS.md"
+note = "From BENCHMARKS.md (prefix of the traces, laptop)."
+limits = "Prefixes of the traces, cold-start misses included."
+
+[[claims]]
+id = "crosscheck"
+group = "testing"
+text = 'Cross-checked the LRU simulator against libCacheSim on **3** traces x **3** sizes: max hit-ratio difference **0.00004**.'
+numbers = ["3", "0.00004"]
+skills = { testing = 1.0, caching = 0.6 }
+[claims.proof]
+status = "reported"
+command = "scripts/crosscheck_lru.sh"
+artifact = "DESIGN.md"
+note = "From DESIGN.md ADR-004."
+
+[[claims]]
+id = "race-fuzz"
+group = "testing"
+text = 'Verified under the Go race detector with a fuzzed RESP parser and nightly stress runs in CI.'
+numbers = []
+skills = { concurrency = 0.8, proptest = 0.9, testing = 0.8, cicd = 0.7, go = 0.5 }
+[claims.proof]
+status = "reported"
+command = "make race && make fuzz"
+artifact = ".github/workflows/nightly.yml"
+note = "From the Makefile and workflows."

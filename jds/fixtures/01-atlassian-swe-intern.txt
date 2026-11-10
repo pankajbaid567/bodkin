@@ -1,0 +1,24 @@
+---
+name: Atlassian SWE Intern 2027 India
+source: paraphrased from the requirements recorded in the hiring report (the posting text itself was not available)
+must: cairn
+one_of: pitbook, taskflow, cache-cluster
+---
+Software Engineering Intern 2027 (India)
+
+About us
+Atlassian builds tools that help teams unleash their potential. Our culture is built on open communication and trust.
+
+What you'll do
+- Build features end to end alongside experienced engineers.
+- Write clean, tested code and take part in code reviews.
+
+What you'll need
+- Currently pursuing a degree in Computer Science or a related field, graduating in 2028, with a CGPA of 6+.
+- Proficiency in Java, Python, C or C++.
+- Strong foundation in data structures and algorithms.
+
+Preferred qualifications
+- Internships, projects or open source contributions.
+- Exposure to AI/ML, including MCP and agentic AI.
+- Basic system design knowledge.

@@ -1,0 +1,40 @@
+EXPERIENCE
+
+Founding Software Engineer (AI & Backend), in.culcate    September 2024 - March 2026
+  • Engineered a 5+ agent pipeline (scripting, voice, ElevenLabs narration), cutting production time 40%.
+  • Built 20+ REST endpoints in Node.js, Express.js, MongoDB for auth and content in a 2,000-user app.
+  • Streamlined the team's deployment workflow, running backend services on AWS EC2.
+  • Automated 5+ publishing workflows with a centralized CMS, reducing content turnaround time by 30%.
+
+PROJECTS
+
+Cairn – Permission-aware evidence search and decision memory    November 2026
+  • Verified generated answers: unsupported claims are dropped; if nothing survives, the reply is a fixed not-found message.
+  • Shipped an MCP stdio server with per-agent tokens and ACL-first GitHub sync; revocations answer 503 until applied.
+  • Built permission-aware evidence search: answers cite only documents the asker may read, else say "not found".
+  • Postgres row-level security plus per-query checks; 50 canary tests find 0 leaks across 5 MCP tools and 2 agents.
+
+Pitbook – Crash-safe matching engine and live order book    November 2026
+  • Built a deterministic price-time matching engine in Go, verified against a reference model over 1,000,000 random commands.
+  • Proved the tests have teeth: 5 of 5 deliberately injected engine bugs are caught by the property test.
+  • Event-sourced with a CRC-framed WAL and group-commit fsync: 0 acked commands lost or duplicated in 1,000 SIGKILL runs.
+  • Open-loop benchmarks (Apple M3): 137 ns/command core, ~670k/s engine-only, ~80k/s with fsync before every ack.
+
+Resilient TaskFlow – Crash-safe distributed job queue    September 2026
+  • Implemented 14 REST endpoints on Node.js, Fastify, TypeScript with JWT auth and idempotency keys.
+  • Designed outbox and fenced leases on PostgreSQL + Redis Streams: 0 of 10,000 jobs lost on SIGKILL.
+  • Benchmarked with k6 on one laptop: 500 submissions/s, p99 346 ms, 0 errors (one API process).
+  • Verified with 300+ tests, incl. 46 Docker integration tests with real workers, in GitHub Actions CI.
+
+ACHIEVEMENTS
+
+  • Merged a fix to Hugging Face Transformers (168k-star repo, PR #42373): TensorDict padding regression.
+  • Team rank 8 on the public leaderboard among ~80,000 registered participants, Amazon ML Challenge 2026.
+  • Merged 2 PostgreSQL RLS fixes in AOSSIE Ell-ena (PRs #76, #78): EXISTS policies, missing DELETE rules.
+
+SKILLS
+
+  Databases & Data Tools: MySQL, MongoDB, PostgreSQL
+  Frameworks & Libraries: FastAPI, Tailwind, Next JS, React Native, Prisma ORM, React, Redux, Node.js, Express JS
+  Computer Language: Python, JavaScript, C++, TypeScript, SQL
+  Generative AI & LLMs: LangChain, LangGraph, GenAI, RAG, LLM, Hugging Face

@@ -1,0 +1,20 @@
+id = "codechef"
+kind = "achievement"
+name = "Competitive programming"
+title = "Competitive programming"
+status = "shipped"
+date = ""
+end = ""
+tech = []
+links = {}
+archetypes = { backend = 0.3 }
+skills = { dsa = 1.0 }
+note = "From the resume."
+
+[[claims]]
+id = "line"
+text = 'CodeChef 3-star (rating **1638**); **600+** DSA problems solved across platforms.'
+numbers = ["3", "1638", "600"]
+[claims.proof]
+status = "reported"
+note = "From the resume."

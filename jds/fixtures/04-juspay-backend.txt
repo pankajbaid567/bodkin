@@ -1,0 +1,19 @@
+---
+name: Juspay backend engineer (fresher)
+source: paraphrased from the process recorded in the hiring report
+one_of: pitbook, cache-cluster
+one_of: vitram, taskflow
+must_not: cairn
+---
+Backend Engineer (Fresher) - Payments
+
+Responsibilities
+- Build high-throughput payment services used by large merchants.
+- Write thread-safe, well-tested code.
+
+Requirements
+- Strong programming fundamentals; functional programming (Haskell) or Rust is a plus.
+- Concurrency and multithreading: writing thread-safe solutions.
+- SQL and database design.
+- Hackathon-style problem solving and a deep dive into your projects.
+- Understanding of payments and transactions.

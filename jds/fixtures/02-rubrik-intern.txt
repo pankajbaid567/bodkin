@@ -1,0 +1,21 @@
+---
+name: Rubrik winter intern (distributed systems)
+source: paraphrased from the requirements recorded in the hiring report
+one_of: cache-cluster, pitbook
+one_of: taskflow, pitbook, cache-cluster
+must_not: cairn
+---
+Software Engineer Intern - Distributed Systems
+
+Responsibilities
+- Work on a distributed, multi-threaded data management platform.
+- Design and implement features with careful attention to concurrency and correctness.
+
+Requirements
+- Strong programming in Java, C/C++, Scala or Python.
+- Solid understanding of data structures and algorithms.
+- Understanding of operating systems concepts: threads, mutexes, semaphores, deadlock and starvation.
+- CGPA of 8+.
+
+Good to have
+- Distributed systems or cloud (AWS, GCP, Azure) experience is an advantage.
