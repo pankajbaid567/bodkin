@@ -1,4 +1,5 @@
 import tempfile
+import shutil
 import unittest
 from pathlib import Path
 
@@ -87,8 +88,12 @@ class RuleTests(unittest.TestCase):
 
     def test_missing_proof_artifact_detected(self):
         self.edit("pitbook.toml", 'artifact = "bench/results/property-*.txt"', 'artifact = "bench/results/nope-*.txt"')
-        bank = Bank.load(self.root)
-        bank.root = Path(__file__).resolve().parent.parent / "bank"      # repo paths resolve relative to the real bank
+        # Self-contained: repo paths are relative to the bank, so build x/y/bank next to a real x/Pitbook directory that exists
+        # but lacks the artifact. (The test used to rely on a sibling Pitbook checkout and failed on a fresh clone.)
+        root = Path(self.tmp.name) / "x" / "y" / "bank"
+        shutil.copytree(self.root, root)
+        (root / ".." / ".." / "Pitbook" / "bench" / "results").resolve().mkdir(parents=True)
+        bank = Bank.load(root)
         self.assertTrue(any("nope" in i.message for i in bank.check_proofs()))
 
 
